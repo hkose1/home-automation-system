@@ -52,7 +52,10 @@ include '../utils/utils.php';
 </body>
 </html>
 <?php 
+    $_SESSION['error'] = null;
     $_SESSION['required_field_error'] = null;
+    $_SESSION['username_taken_error'] = null;
+    $_SESSION['succeessfully_signedup'] = null;
     $_SESSION['username'] = null;
     $_SESSION['email'] = null;
     $_SESSION['phone'] = null;
