@@ -15,21 +15,36 @@ include '../utils/utils.php';
 </head>
 <body>
     <main>
-        <?php if(session('required_field_error')): ?>
+
+        <?php if(session('error')): ?>
+            <div><?= session('error') ?></div>
+
+        <?php elseif(session('required_field_error')): ?>
             <div><?= session('required_field_error') ?></div>
+
+        <?php elseif(session('username_taken_error')): ?>
+            <div><?= session('username_taken_error') ?></div>
+
+        <?php elseif(session('succeessfully_signedup')): ?>
+            <div><?= session('succeessfully_signedup') ?></div>
         <?php endif ?>
+        
+        
         <form action="../controller/controller.php?req=signup" method="post">
             <label for="username">Username</label><span> *</span><br>
-            <input type="text" name="username" id="username" value="<?= session('username') ?>"><br><br>
+            <input type="text" name="username" id="username" value="<?= session('username') ?>" placeholder="username"><br><br>
 
             <label for="password">Password</label><span> *</span><br>
-            <input type="password" name="password" id="password"><br><br>
+            <input type="password" name="password" id="password" placeholder="********"><br><br>
 
             <label for="email">Email</label><span> *</span><br>
-            <input type="email" name="email" id="email" value="<?= session('email') ?>"><br><br>
+            <input type="email" name="email" id="email" value="<?= session('email') ?>" placeholder="example@gmail.com"><br><br>
 
             <label for="phone">Phone Number</label><br>
-            <input type="tel" name="phone" id="phone" pattern="[0-9]{4}-[0-9]{3}-[0-9]{4}" value="<?= session('phone') ?>"><br><br>
+            <input type="tel" name="phone" id="phone" 
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
+                placeholder="xxx-xxx-xxxx"
+                value="<?= session('phone') ?>"><br><br>
 
             <button type="submit">Sign-up</button>
         </form>
