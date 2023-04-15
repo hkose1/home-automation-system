@@ -46,7 +46,7 @@ include '../utils/utils.php';
                 placeholder="xxx-xxx-xxxx"
                 value="<?= session('phone') ?>"><br><br>
 
-            <button type="submit">Sign-up</button>
+            <button type="submit">Sign up</button><br><br>
         </form>
     </main>
 </body>
