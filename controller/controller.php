@@ -36,5 +36,29 @@ if (get('req') == 'signup') {
     }
 }
 
+if (get('req') == 'login') {
+    $username = post('username');
+    $password = post('password');
+    
+    $_SESSION['username'] = $username;
+
+    if (empty($username) || empty($password)) {
+        $_SESSION['required_field_error'] = "Please, enter your username and password.";
+        header("Location:../login/login.php");
+        exit();
+    }else {
+        $user = get_user($username, $password);
+        if ($user) {
+            $_SESSION['login'] = true;
+            header("Location:../index.php");
+            exit();
+        }else {
+            $_SESSION['no_account_error'] = "There is no such a user";
+            header("Location:../login/login.php");
+            exit();
+        }
+    }
+}
+
 
 ?>
