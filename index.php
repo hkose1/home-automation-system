@@ -54,7 +54,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
     <div class="main-container d-flex">
         <div class="sidebar" id="side-nav">
             <div class="header-box px-2 pt-3 pb-4">
-            <h1 class="fs-4"><span class="text-dark">Parts of the house</span></h1>
+            <h1 class="fs-4"><span class="text-dark" style="margin-left: 15px;">Parts of the house</span></h1><hr>
             <button class="btn d-md-none d-block close-btn px-1 py-0 text-dark"><i class="fa-solid fa-bars fa-xl"></i></button>
             </div>
             <ul class="list-unstyled px-2">
@@ -141,7 +141,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
             <div class="navbar navbar-light bg-light">    
                 <ul class="d-flex list-unstyled justify-content-between align-items-center">
                     <li>
-                        <h1 style="margin-left: 15px; margin-right: 15px;">Home Automation System</h1>
+                        <h2 style="margin-left: 15px; margin-right: 15px;">Home Automation System</h2>
                     </li>
                     <li>
                         <a href="./controller/controller.php?req=logout" class="btn btn-outline-success logout">Log out</a>
