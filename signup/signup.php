@@ -18,7 +18,7 @@ include '../utils/utils.php';
     <main class="container d-flex align-items-center justify-content-center" style="margin-top: 7rem;">
         <div class="card" style="width: 30rem;">
             <div class="card-header">
-                Sign up
+                <strong>Sign up</strong>
             </div>
 
             <div class="card-body">
@@ -51,7 +51,7 @@ include '../utils/utils.php';
                     <input type="password" name="password" id="password"
                         class="form-control"
                         placeholder="********">
-                    </div>
+                </div>
 
 
                 <label for="email" class="col-sm-3 col-form-label">Email<span style="color:red"> *</span></label>
@@ -71,8 +71,8 @@ include '../utils/utils.php';
                         value="<?= session('phone') ?>">
                 </div>
                 <div style="display: flex; justify-content:flex-start; align-items: center">
-                <button type="submit" class="btn btn-success mb-4" style="margin: 23px 5px">Sign up</button>
-                <a href="../login/login.php" class="btn btn-primary">Log in</a><br><br>
+                    <button type="submit" class="btn btn-success mb-4" style="margin: 23px 5px">Sign up</button>
+                    <a href="../login/login.php" class="btn btn-primary">Log in</a>
                 </div>
             </form>
             </div>
