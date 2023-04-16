@@ -15,18 +15,19 @@ include '../utils/utils.php';
 </head>
 <body>
     <main>
+        <div class="wrapper">
 
         <?php if(session('error')): ?>
-            <div><?= session('error') ?></div>
+            <div class="error"><?= session('error') ?></div>
 
         <?php elseif(session('required_field_error')): ?>
-            <div><?= session('required_field_error') ?></div>
+            <div class="error"><?= session('required_field_error') ?></div>
 
         <?php elseif(session('username_taken_error')): ?>
-            <div><?= session('username_taken_error') ?></div>
+            <div class="error"><?= session('username_taken_error') ?></div>
 
         <?php elseif(session('succeessfully_signedup')): ?>
-            <div><?= session('succeessfully_signedup') ?></div>
+            <div class="success"><?= session('succeessfully_signedup') ?></div>
         <?php endif ?>
         
         
@@ -46,8 +47,9 @@ include '../utils/utils.php';
                 placeholder="xxx-xxx-xxxx"
                 value="<?= session('phone') ?>"><br><br>
 
-            <button type="submit">Sign up</button><br><br>
+            <button type="submit">Sign up</button><a href="../login/login.php">Log in</a><br><br>
         </form>
+        </div>
     </main>
 </body>
 </html>
