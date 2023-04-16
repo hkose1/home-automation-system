@@ -31,7 +31,7 @@ include '../utils/utils.php';
             <label for="password">Password</label><br>
             <input type="password" name="password" id="password" placeholder="********"><br><br>
 
-            <button type="submit">Log in</button><br><br>
+            <button type="submit">Log in</button><a href="../signup/signup.php">Sign up</a><br><br>
         </form>
     </main>
 </body>
