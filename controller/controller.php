@@ -60,5 +60,9 @@ if (get('req') == 'login') {
     }
 }
 
+if (get('req') == 'logout') {
+    session_destroy();
+    header('Location:../login/login.php');
+}
 
 ?>
