@@ -50,7 +50,7 @@ if (get('req') == 'login') {
         $user = get_user($username, $password);
         if ($user) {
             $_SESSION['login'] = true;
-            header("Location:../index.php");
+            header("Location:../index.php?room_id=1");
             exit();
         }else {
             $_SESSION['no_account_error'] = "There is no such a user";
