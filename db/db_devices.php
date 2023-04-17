@@ -8,6 +8,21 @@ try {
     echo $e->getMessage();
 }
 
+// room: to get temperature and humidity
+
+function get_temperature_and_humidity($room_id) {
+    global $db;
+    $q = $db->prepare("SELECT * FROM room WHERE id = ?");
+    $device = $q->execute([$room_id]);
+    if($device) {
+        if ($q->rowCount()) {
+            return $q->fetch(PDO::FETCH_ASSOC);
+        }else {
+            return [];
+        }
+    }
+}
+
 // air condition 
 function get_ac_device($room_id) {
     global $db;
