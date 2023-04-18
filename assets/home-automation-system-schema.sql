@@ -1,0 +1,63 @@
+-- CREATE SCHEMA home_automation_system
+
+-- CREATE TABLE user (
+-- 	user_id INT NOT NULL AUTO_INCREMENT,
+--     username VARCHAR(100) NOT NULL,
+--     password VARCHAR(50) NOT NULL,
+--     email VARCHAR(100) NOT NULL,
+--     phone_no VARCHAR(15),
+--     PRIMARY KEY(user_id)
+-- )
+
+-- CREATE TABLE room(
+-- 	id SMALLINT NOT NULL,
+--  title VARCHAR(255) NOT NULL,
+-- 	temperature FLOAT DEFAULT 0,
+--  humidity FLOAT DEFAULT 0,
+--  PRIMARY KEY(id)
+-- )
+
+-- CREATE TABLE device_ac(
+-- 	id SMALLINT NOT NULL,
+--     room_id SMALLINT,
+--     state BOOLEAN DEFAULT FALSE,
+--     value TINYINT DEFAULT 0,
+--     PRIMARY KEY(id),
+--     FOREIGN KEY(room_id) REFERENCES room(id)
+-- )
+-- CREATE TABLE device_tv(
+-- 	id SMALLINT NOT NULL,
+--     room_id SMALLINT,
+--     state BOOLEAN DEFAULT FALSE,
+--     PRIMARY KEY(id),
+--     FOREIGN KEY(room_id) REFERENCES room(id)
+-- )
+-- CREATE TABLE device_audio(
+-- 	id SMALLINT NOT NULL,
+--     room_id SMALLINT,
+--     state BOOLEAN DEFAULT FALSE,
+--     value TINYINT DEFAULT 0,
+--     PRIMARY KEY(id),
+--     FOREIGN KEY(room_id) REFERENCES room(id)
+-- )
+-- CREATE TABLE device_window(
+-- 	id SMALLINT NOT NULL,
+--     room_id SMALLINT,
+--     state BOOLEAN DEFAULT FALSE,
+--     PRIMARY KEY(id),
+--     FOREIGN KEY(room_id) REFERENCES room(id)
+-- )
+-- CREATE TABLE device_lamp(
+-- 	id SMALLINT NOT NULL,
+--     room_id SMALLINT,
+--     state BOOLEAN DEFAULT FALSE,
+--     PRIMARY KEY(id),
+--     FOREIGN KEY(room_id) REFERENCES room(id)
+-- )
+-- CREATE TABLE device_curtain(
+-- 	id SMALLINT NOT NULL,
+--     room_id SMALLINT,
+--     state BOOLEAN DEFAULT FALSE,
+--     PRIMARY KEY(id),
+--     FOREIGN KEY(room_id) REFERENCES room(id)
+-- )
