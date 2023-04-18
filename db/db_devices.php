@@ -39,7 +39,7 @@ function get_ac_device($room_id) {
 
 function set_ac_device_state($id, $state) {
     global $db;
-    $q = $db->prepare("UPDATE device_ac SET state = ? WHERE id = ?");
+    $q = $db->prepare("UPDATE device_ac SET state = ? WHERE room_id = ?");
     $q->execute([$state, $id]);
 }
 function set_ac_device_value($id, $value) {
