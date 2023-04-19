@@ -2,8 +2,6 @@
 
 session_start();
 
-// include 'controller/room_content_controller.php';
-
 include 'db/db_devices.php';
 include 'utils/utils.php';
 
@@ -72,7 +70,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
             <ul class="list-unstyled px-2">
                 <li id="living-room">
                     <div class="card my-card">
-                        <img src="./image/rooms/living-room.avif" class="card-image-top" alt="living-room" />
+                        <img src="./assets/image/rooms/living-room.avif" class="card-image-top" alt="living-room" />
                         <div class="card-body">
                             <h5 class="card-title">Living Room</h5>
                             <table class="table">
@@ -81,7 +79,8 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                                     <th>HUMIDITY</th>
                                 </tr>
                                 <tr>
-                                    <?php $room_info = get_temperature_and_humidity(1); if($room_info): ?>
+                                    <?php $room_info = get_temperature_and_humidity(1);
+                                    if ($room_info) : ?>
                                         <td style="border-right: 1px solid #333">
                                             <?= $room_info['temperature'] ?>&#8451
                                         </td>
@@ -97,7 +96,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                 </li>
                 <li id="bedroom">
                     <div class="card my-card">
-                        <img src="./image/rooms/bedroom.avif" class="card-image-top" alt="bedroom" />
+                        <img src="./assets/image/rooms/bedroom.avif" class="card-image-top" alt="bedroom" />
                         <div class="card-body">
                             <h5 class="card-title">Bedroom</h5>
                             <table class="table">
@@ -106,7 +105,8 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                                     <th>HUMIDITY</th>
                                 </tr>
                                 <tr>
-                                    <?php $room_info = get_temperature_and_humidity(2); if($room_info): ?>
+                                    <?php $room_info = get_temperature_and_humidity(2);
+                                    if ($room_info) : ?>
                                         <td style="border-right: 1px solid #333">
                                             <?= $room_info['temperature'] ?>&#8451
                                         </td>
@@ -122,7 +122,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                 </li>
                 <li id="bathroom">
                     <div class="card my-card">
-                        <img src="./image/rooms/bathroom.avif" class="card-image-top" alt="bathroom" />
+                        <img src="./assets/image/rooms/bathroom.avif" class="card-image-top" alt="bathroom" />
                         <div class="card-body">
                             <h5 class="card-title">Bathroom</h5>
                             <table class="table">
@@ -131,7 +131,8 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                                     <th>HUMIDITY</th>
                                 </tr>
                                 <tr>
-                                    <?php $room_info = get_temperature_and_humidity(3); if($room_info): ?>
+                                    <?php $room_info = get_temperature_and_humidity(3);
+                                    if ($room_info) : ?>
                                         <td style="border-right: 1px solid #333">
                                             <?= $room_info['temperature'] ?>&#8451
                                         </td>
@@ -147,7 +148,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                 </li>
                 <li id="kitchen">
                     <div class="card my-card">
-                        <img src="./image/rooms/kitchen.avif" class="card-image-top" alt="kitchen" />
+                        <img src="./assets/image/rooms/kitchen.avif" class="card-image-top" alt="kitchen" />
                         <div class="card-body">
                             <h5 class="card-title">Kitchen</h5>
                             <table class="table">
@@ -156,7 +157,8 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                                     <th>HUMIDITY</th>
                                 </tr>
                                 <tr>
-                                    <?php $room_info = get_temperature_and_humidity(4); if($room_info): ?>
+                                    <?php $room_info = get_temperature_and_humidity(4);
+                                    if ($room_info) : ?>
                                         <td style="border-right: 1px solid #333">
                                             <?= $room_info['temperature'] ?>&#8451
                                         </td>
@@ -180,13 +182,14 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                         <h2 style="margin-left: 15px; margin-right: 15px;">Home Automation System</h2>
                     </li>
                     <li>
-                        <a href="./controller/controller.php?req=logout" class="btn btn-outline-success logout">Log out</a>
+                        <a href="./controller/controller.php?req=logout" class="btn btn-success logout">Log out</a>
                     </li>
                 </ul>
             </div>
 
             <div class="d-flex justify-content-around flex-wrap">
-                <?php $device = get_ac_device(get('room_id')); if ($device) :  ?>
+                <?php $device = get_ac_device(get('room_id'));
+                if ($device) :  ?>
                     <div class="card my-card" style="width: 23rem;">
                         <div class="card-header">
                             <div class="form-check form-switch">
@@ -195,7 +198,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
-                            <img src="./image/devices/air-conditioner.avif" class="card-image-top device-icon" alt="air-conditioner" />
+                            <img src="./assets/image/devices/air-conditioner.avif" class="card-image-top device-icon" alt="air-conditioner" />
                             <div>
                                 <input type="range" name="ac-range" id="ac-range">
                                 <span>Value: <output id="ac-value"><?= $device['value'] ?></output></span>
@@ -204,30 +207,32 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                     </div>
                 <?php endif ?>
 
-                <?php $device = get_tv_device(get('room_id')); if ($device) :  ?>
+                <?php $device = get_tv_device(get('room_id'));
+                if ($device) :  ?>
                     <div class="card my-card" style="width: 23rem;">
                         <div class="card-header">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="tv" <?= $device['state'] ? 'checked' : '' ?>>
+                                <input class="form-check-input" type="checkbox" role="switch" id="tv-toggle" <?= $device['state'] ? 'checked' : '' ?>>
                                 <label class="form-check-label" for="tv">Television</label>
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
-                            <img src="./image/devices/television.avif" class="card-image-top device-icon" alt="television" />
+                            <img src="./assets/image/devices/television.avif" class="card-image-top device-icon" alt="television" />
                         </div>
                     </div>
                 <?php endif ?>
 
-                <?php $device = get_audio_system_device(get('room_id')); if ($device) :  ?>
+                <?php $device = get_audio_system_device(get('room_id'));
+                if ($device) :  ?>
                     <div class="card my-card" style="width: 23rem;">
                         <div class="card-header">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="audio-system" <?= $device['state'] ? 'checked' : '' ?>>
+                                <input class="form-check-input" type="checkbox" role="switch" id="audio-system-toggle" <?= $device['state'] ? 'checked' : '' ?>>
                                 <label class="form-check-label" for="audio-system">Audio System</label>
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
-                            <img src="./image/devices/audio-system.avif" class="card-image-top device-icon" alt="audio-system" />
+                            <img src="./assets/image/devices/audio-system.avif" class="card-image-top device-icon" alt="audio-system" />
                             <div>
                                 <input type="range" name="audio-range" id="audio-range">
                                 <span>Value: <output id="audio-value"><?= $device['value'] ?></output></span>
@@ -236,21 +241,23 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                     </div>
                 <?php endif ?>
 
-                <?php $device = get_window_device(get('room_id')); if ($device) :  ?>
+                <?php $device = get_window_device(get('room_id'));
+                if ($device) :  ?>
                     <div class="card my-card" style="width: 23rem;">
                         <div class="card-header">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="window" <?= $device['state'] ? 'checked' : '' ?>>
+                                <input class="form-check-input" type="checkbox" role="switch" id="window-toggle" <?= $device['state'] ? 'checked' : '' ?>>
                                 <label class="form-check-label" for="window">Windows</label>
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
-                            <img src="./image/devices/window.avif" class="card-image-top device-icon" alt="windows" />
+                            <img src="./assets/image/devices/window.avif" class="card-image-top device-icon" alt="windows" />
                         </div>
                     </div>
                 <?php endif ?>
 
-                <?php $device = get_lamp_device(get('room_id')); if ($device) :  ?>
+                <?php $device = get_lamp_device(get('room_id'));
+                if ($device) :  ?>
                     <div class="card my-card" style="width: 23rem;">
                         <div class="card-header">
                             <div class="form-check form-switch">
@@ -259,12 +266,17 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
-                            <img src="./image/devices/lamp-off.avif" class="card-image-top device-icon" alt="lamp" id="lamp-icon" />
+                            <?php if($device['state']): ?>
+                                <img src="./assets/image/devices/lamp-on.avif" class="card-image-top device-icon" alt="lamp" id="lamp-icon" />
+                            <?php else: ?>
+                                <img src="./assets/image/devices/lamp-off.avif" class="card-image-top device-icon" alt="lamp" id="lamp-icon" />
+                            <?php endif?>
                         </div>
                     </div>
                 <?php endif ?>
 
-                <?php $device = get_curtain_device(get('room_id')); if ($device) :  ?>
+                <?php $device = get_curtain_device(get('room_id'));
+                if ($device) :  ?>
                     <div class="card my-card" style="width: 23rem;">
                         <div class="card-header">
                             <div class="form-check form-switch">
@@ -273,7 +285,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
-                            <img src="./image/devices/curtain.avif" class="card-image-top device-icon" alt="curtain" />
+                            <img src="./assets/image/devices/curtain.avif" class="card-image-top device-icon" alt="curtain" />
                         </div>
                     </div>
                 <?php endif ?>
@@ -281,41 +293,9 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
             </div>
         </div>
     </div>
-    <script>
-        // air conditioner
-        const acToggle = document.getElementById("ac-toggle");
-        if (acToggle) {
-            acToggle.addEventListener("click", (e) => {
-                sessionStorage.setItem("ac-toggle", e.target.checked);
-            })
-        }
-        const acInput = document.getElementById("ac-range")
-        const acValue = document.getElementById("ac-value")
-        if (acInput && acValue) {
-            acValue.textContent = acInput.value
-            acInput.addEventListener("input", (event) => {
-                acValue.textContent = event.target.value
-            })
-        }
-
-        // lamp
-        const lampToggle = document.getElementById("lamp-toggle");
-        if (lampToggle) {
-            lampToggle.addEventListener("click", (e) => {
-                const lampIcon = document.getElementById("lamp-icon");
-                if(e.target.checked) {
-                    lampIcon.setAttribute("src","./image/devices/lamp-on.avif")
-                }else {
-                    lampIcon.setAttribute("src","./image/devices/lamp-off.avif")
-                }
-            })
-        }
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous">
     </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
-<?php
-    // echo "<pre>";
-    // echo print_r($_SESSION);
-    // set_ac_device_state(1, $_SESSION['ac-toggle']);
-?>
