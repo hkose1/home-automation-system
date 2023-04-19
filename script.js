@@ -10,8 +10,8 @@ const acValue = document.getElementById("ac-value")
 if (acRange && acValue) {
     acValue.textContent = acRange.value
     acRange.addEventListener("input", (event) => {
-        acValue.textContent = event.target.value
-        postRangeValue(acRange, event.target.value);
+        acValue.textContent = event.target.value;
+        postRangeValue(acRange, event.target.value, 'ac', room_id);
     })
 }
 
@@ -28,7 +28,8 @@ const audioValue = document.getElementById("audio-value");
 if (audioRange && audioValue) {
     audioValue.textContent = audioRange.value
     audioRange.addEventListener("input", (event) => {
-        audioValue.textContent = event.target.value
+        audioValue.textContent = event.target.value;
+        postRangeValue(audioRange, event.target.value, 'audio', room_id);
     })
 }
 const audioToggle = document.getElementById("audio-system-toggle");
@@ -57,13 +58,13 @@ const curtainToggle = document.getElementById("curtain-toggle");
 postToggleValue(curtainToggle, 'curtain', room_id);
 
 
-function postRangeValue(targetRange, value) {
+function postRangeValue(targetRange, value, device, room_id) {
     if (targetRange) {
-        const room_id = 1;
         $(document).ready(function () {
             const data = {
                 'room_id': room_id,
                 'range_value': value,
+                'device': device
             }
             $.ajax({
                 type: "POST",
