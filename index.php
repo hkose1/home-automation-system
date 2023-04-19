@@ -222,8 +222,8 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
                             <img src="./assets/image/devices/air-conditioner.avif" class="card-image-top device-icon" alt="air-conditioner" />
                             <div>
-                                <input type="range" name="ac-range" id="ac-range">
-                                <span>Value: <output id="ac-value"><?= $device['value'] ?></output></span>
+                                <input type="range" name="ac-range" id="ac-range" value=<?= $device['value'] ?>>
+                                <span>Value: <output id="ac-value"></output></span>
                             </div>
                         </div>
                     </div>
@@ -256,8 +256,8 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
                             <img src="./assets/image/devices/audio-system.avif" class="card-image-top device-icon" alt="audio-system" />
                             <div>
-                                <input type="range" name="audio-range" id="audio-range">
-                                <span>Value: <output id="audio-value"><?= $device['value'] ?></output></span>
+                                <input type="range" name="audio-range" id="audio-range" value=<?= $device['value'] ?>>
+                                <span>Value: <output id="audio-value"></output></span>
                             </div>
                         </div>
                     </div>
