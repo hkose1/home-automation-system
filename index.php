@@ -57,6 +57,10 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
         .device-icon {
             width: 10rem;
         }
+
+        .room-title {
+            margin-top: 20px;
+        }
     </style>
 </head>
 
@@ -186,7 +190,25 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                     </li>
                 </ul>
             </div>
-
+            <div id=<?= get('room_id') ?> class="d-flex justify-content-center room-title">
+                <h3>
+                    <?php $id = get('room_id');
+                    switch ($id) {
+                        case 1:
+                            echo "Living Room";
+                            break;
+                        case 2:
+                            echo "Bedroom";
+                            break;
+                        case 3:
+                            echo "Bathroom";
+                            break;
+                        case 4:
+                            echo "Kitchen";
+                            break;
+                    } ?>
+                </h3>
+            </div>
             <div class="d-flex justify-content-around flex-wrap">
                 <?php $device = get_ac_device(get('room_id'));
                 if ($device) :  ?>
@@ -266,11 +288,11 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
-                            <?php if($device['state']): ?>
+                            <?php if ($device['state']) : ?>
                                 <img src="./assets/image/devices/lamp-on.avif" class="card-image-top device-icon" alt="lamp" id="lamp-icon" />
-                            <?php else: ?>
+                            <?php else : ?>
                                 <img src="./assets/image/devices/lamp-off.avif" class="card-image-top device-icon" alt="lamp" id="lamp-icon" />
-                            <?php endif?>
+                            <?php endif ?>
                         </div>
                     </div>
                 <?php endif ?>
