@@ -1,3 +1,9 @@
+const roomTitleForRoomId = document.getElementsByClassName('room-title');
+let room_id = 1; // default
+if (roomTitleForRoomId) {
+    room_id = roomTitleForRoomId[0].getAttribute("id");
+}
+
 // air condition
 const acRange = document.getElementById("ac-range")
 const acValue = document.getElementById("ac-value")
@@ -10,11 +16,11 @@ if (acRange && acValue) {
 }
 
 const acToggle = document.getElementById("ac-toggle");
-postToggleValue(acToggle, 'ac');
+postToggleValue(acToggle, 'ac', room_id);
 
 // tv
 const tvToggle = document.getElementById("tv-toggle");
-postToggleValue(tvToggle, 'tv');
+postToggleValue(tvToggle, 'tv', room_id);
 
 // audio system
 const audioRange = document.getElementById("audio-range");
@@ -26,11 +32,11 @@ if (audioRange && audioValue) {
     })
 }
 const audioToggle = document.getElementById("audio-system-toggle");
-postToggleValue(audioToggle, 'audio');
+postToggleValue(audioToggle, 'audio', room_id);
 
 // window
 const windowToggle = document.getElementById("window-toggle");
-postToggleValue(windowToggle, 'window');
+postToggleValue(windowToggle, 'window', room_id);
 
 // lamp
 const lampToggle = document.getElementById("lamp-toggle");
@@ -44,11 +50,11 @@ if (lampToggle) {
         }
     })
 }
-postToggleValue(lampToggle, 'lamp');
+postToggleValue(lampToggle, 'lamp', room_id);
 
 // curtain
 const curtainToggle = document.getElementById("curtain-toggle");
-postToggleValue(curtainToggle, 'curtain');
+postToggleValue(curtainToggle, 'curtain', room_id);
 
 
 function postRangeValue(targetRange, value) {
@@ -80,11 +86,10 @@ function postRangeValue(targetRange, value) {
     }
 }
 
-function postToggleValue(targetToggle, device) {
+function postToggleValue(targetToggle, device, room_id) {
     if (targetToggle) {
         targetToggle.addEventListener("click", (e) => {
             const state = e.target.checked;
-            const room_id = 1;
             $(document).ready(function () {
                 const data = {
                     'room_id': room_id,
