@@ -37,6 +37,7 @@ function get_ac_device($room_id) {
     }
 }
 
+
 function set_ac_device_state($id, $state) {
     global $db;
     $q = $db->prepare("UPDATE device_ac SET state = ? WHERE room_id = ?");
@@ -61,6 +62,11 @@ function get_tv_device($room_id) {
         }
     }
 }
+function set_tv_device_state($id, $state) {
+    global $db;
+    $q = $db->prepare("UPDATE device_tv SET state = ? WHERE room_id = ?");
+    $q->execute([$state, $id]);
+}
 
 // audio system
 function get_audio_system_device($room_id) {
@@ -74,6 +80,11 @@ function get_audio_system_device($room_id) {
             return [];
         }
     }
+}
+function set_audio_device_state($id, $state) {
+    global $db;
+    $q = $db->prepare("UPDATE device_audio SET state = ? WHERE room_id = ?");
+    $q->execute([$state, $id]);
 }
 
 // window
@@ -89,6 +100,11 @@ function get_window_device($room_id) {
         }
     }
 }
+function set_window_device_state($id, $state) {
+    global $db;
+    $q = $db->prepare("UPDATE device_window SET state = ? WHERE room_id = ?");
+    $q->execute([$state, $id]);
+}
 
 // lamp
 function get_lamp_device($room_id) {
@@ -103,6 +119,12 @@ function get_lamp_device($room_id) {
         }
     }
 }
+
+function set_lamp_device_state($id, $state) {
+    global $db;
+    $q = $db->prepare("UPDATE device_lamp SET state = ? WHERE room_id = ?");
+    $q->execute([$state, $id]);
+}
 // curtain
 function get_curtain_device($room_id) {
     global $db;
@@ -115,5 +137,10 @@ function get_curtain_device($room_id) {
             return [];
         }
     }
+}
+function set_curtain_device_state($id, $state) {
+    global $db;
+    $q = $db->prepare("UPDATE device_curtain SET state = ? WHERE room_id = ?");
+    $q->execute([$state, $id]);
 }
 ?>
