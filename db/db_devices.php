@@ -45,7 +45,7 @@ function set_ac_device_state($id, $state) {
 }
 function set_ac_device_value($id, $value) {
     global $db;
-    $q = $db->prepare("UPDATE device_ac SET value = ? WHERE id = ?");
+    $q = $db->prepare("UPDATE device_ac SET value = ? WHERE room_id = ?");
     $q->execute([$value, $id]);
 }
 
@@ -85,6 +85,11 @@ function set_audio_device_state($id, $state) {
     global $db;
     $q = $db->prepare("UPDATE device_audio SET state = ? WHERE room_id = ?");
     $q->execute([$state, $id]);
+}
+function set_audio_device_value($id, $value) {
+    global $db;
+    $q = $db->prepare("UPDATE device_audio SET value = ? WHERE room_id = ?");
+    $q->execute([$value, $id]);
 }
 
 // window
