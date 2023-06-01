@@ -15,9 +15,25 @@ if (acRange && acValue) {
     })
 }
 
-const acMood = document.querySelector("input[type='radio'][name='ac-mood-radio']:checked").value
-if (acMood) {
-    postACMoodValue('ac', acMood == 'heat' ? true : false, room_id);
+const acModeHeat = document.getElementById("ac-radio-heat");
+const acModeCool = document.getElementById("ac-radio-cool");
+
+console.log("initial: "+acModeHeat.checked);
+console.log("initial: "+acModeCool.checked);
+
+if (acModeHeat) {
+    acModeHeat.addEventListener("click", () => {
+        postACModeValue(1, 'ac', room_id);
+        console.log(acModeHeat.checked);
+        console.log(acModeCool.checked);
+    })
+}
+if (acModeCool) {
+    acModeCool.addEventListener("click", () => {
+        postACModeValue(0, 'ac', room_id);
+        console.log(acModeHeat.checked);
+        console.log(acModeCool.checked);
+    })
 }
 
 const acToggle = document.getElementById("ac-toggle");
@@ -123,11 +139,11 @@ function postToggleValue(targetToggle, device, room_id) {
 
 }
 
-function postACMoodValue(device, value, room_id) {
+function postACModeValue(value, device, room_id) {
     $(document).ready(function () {
         const data = {
             'room_id': room_id,
-            'mood_value': value,
+            'mode_value': value,
             'device': device
         }
         $.ajax({

@@ -48,10 +48,11 @@ function set_ac_device_value($id, $value) {
     $q = $db->prepare("UPDATE device_ac SET value = ? WHERE room_id = ?");
     $q->execute([$value, $id]);
 }
-function set_ac_device_mood($id, $mood_value) {
+
+function set_ac_device_mood($id, $mode_value) {
     global $db;
-    $q = $db->prepare("UPDATE device_ac SET mood = ? WHERE room_id = ?");
-    $q->execute([$mood_value, $id]);
+    $q = $db->prepare("UPDATE device_ac SET mode = ? WHERE room_id = ?");
+    $q->execute([$mode_value, $id]);
 }
 
 // television
