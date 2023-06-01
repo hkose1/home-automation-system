@@ -5,14 +5,19 @@ if (roomTitleForRoomId) {
 }
 
 // air condition
-const acRange = document.getElementById("ac-range")
-const acValue = document.getElementById("ac-value")
+const acRange = document.getElementById("ac-range");
+const acValue = document.getElementById("ac-value");
 if (acRange && acValue) {
     acValue.textContent = acRange.value
     acRange.addEventListener("input", (event) => {
         acValue.textContent = event.target.value;
         postRangeValue(acRange, event.target.value, 'ac', room_id);
     })
+}
+
+const acMood = document.querySelector("input[type='radio'][name='ac-mood-radio']:checked").value
+if (acMood) {
+    postACMoodValue('ac', acMood == 'heat' ? true : false, room_id);
 }
 
 const acToggle = document.getElementById("ac-toggle");
@@ -115,6 +120,32 @@ function postToggleValue(targetToggle, device, room_id) {
             })
         })
     }
+
+}
+
+function postACMoodValue(device, value, room_id) {
+    $(document).ready(function () {
+        const data = {
+            'room_id': room_id,
+            'mood_value': value,
+            'device': device
+        }
+        $.ajax({
+            type: "POST",
+            url: "save_changes.php",
+            data: JSON.stringify(data),
+            dataType: 'text',
+            async: false,
+            contentType: "application/json",
+            cache: false,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (xhr) {
+                console.error(xhr);
+            }
+        })
+    })
 
 }
 
