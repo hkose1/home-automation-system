@@ -5,11 +5,11 @@ include './db/db_devices.php';
 $content = trim(file_get_contents("php://input"));
 $data = json_decode($content, true);
 
-$room_id = $data['room_id'];
-$state = $data['state'];
-$rangeValue = $data['range_value'];
-$which_device = $data['device'];
-$mode_value = $data['mode_value'];
+$room_id = $data['room_id'] ?? null;
+$state = $data['state'] ?? null;
+$rangeValue = $data['range_value'] ?? null;
+$which_device = $data['device'] ?? null;
+$mode_value = $data['mode_value'] ?? null;
 
 
 switch ($which_device) {
