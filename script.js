@@ -21,15 +21,11 @@ const acModeCool = document.getElementById("ac-radio-cool");
 if (acModeHeat) {
     acModeHeat.addEventListener("click", () => {
         postACModeValue(1, 'ac', room_id);
-        console.log(acModeHeat.checked);
-        console.log(acModeCool.checked);
     })
 }
 if (acModeCool) {
     acModeCool.addEventListener("click", () => {
         postACModeValue(0, 'ac', room_id);
-        console.log(acModeHeat.checked);
-        console.log(acModeCool.checked);
     })
 }
 
@@ -91,13 +87,7 @@ function postRangeValue(targetRange, value, device, room_id) {
                 dataType: 'text',
                 async: false,
                 contentType: "application/json",
-                cache: false,
-                success: function (data) {
-                    console.log(data);
-                },
-                error: function (xhr) {
-                    console.error(xhr);
-                }
+                cache: false
             })
 
 
@@ -122,13 +112,7 @@ function postToggleValue(targetToggle, device, room_id) {
                     dataType: 'text',
                     async: false,
                     contentType: "application/json",
-                    cache: false,
-                    success: function (data) {
-                        console.log(data);
-                    },
-                    error: function (xhr) {
-                        console.error(xhr);
-                    }
+                    cache: false
                 })
             })
         })
@@ -150,13 +134,7 @@ function postACModeValue(value, device, room_id) {
             dataType: 'text',
             async: false,
             contentType: "application/json",
-            cache: false,
-            success: function (data) {
-                console.log(data);
-            },
-            error: function (xhr) {
-                console.error(xhr);
-            }
+            cache: false
         })
     })
 
