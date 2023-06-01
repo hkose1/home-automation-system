@@ -18,9 +18,6 @@ if (acRange && acValue) {
 const acModeHeat = document.getElementById("ac-radio-heat");
 const acModeCool = document.getElementById("ac-radio-cool");
 
-console.log("initial: "+acModeHeat.checked);
-console.log("initial: "+acModeCool.checked);
-
 if (acModeHeat) {
     acModeHeat.addEventListener("click", () => {
         postACModeValue(1, 'ac', room_id);
