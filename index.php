@@ -221,6 +221,13 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
                             <img src="./assets/image/devices/air-conditioner.avif" class="card-image-top device-icon" alt="air-conditioner" />
+                            <div style="margin: 4px 0px">
+                                <label for="ac-radio-heat">Heat</label>
+                                <input type="radio" name="ac-mood-radio" id="ac-radio-heat" value="heat" style="margin-right: 15px;" <?= $device['mood'] ? 'checked' : ''?>>
+
+                                <label for="ac-radio-cool">Cool</label>
+                                <input type="radio" name="ac-mood-radio" id="ac-radio-cool" value="cool" <?= $device['mood'] ? '' : 'checked'?>>
+                            </div>
                             <div>
                                 <input type="range" name="ac-range" id="ac-range" value=<?= $device['value'] ?>>
                                 <span>Value: <output id="ac-value"></output></span>
@@ -235,7 +242,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                         <div class="card-header">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" role="switch" id="tv-toggle" <?= $device['state'] ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="tv">Television</label>
+                                <label class="form-check-label" for="tv-toggle">Television</label>
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
@@ -250,7 +257,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                         <div class="card-header">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" role="switch" id="audio-system-toggle" <?= $device['state'] ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="audio-system">Audio System</label>
+                                <label class="form-check-label" for="audio-system-toggle">Audio System</label>
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
@@ -269,7 +276,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                         <div class="card-header">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" role="switch" id="window-toggle" <?= $device['state'] ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="window">Windows</label>
+                                <label class="form-check-label" for="window-toggle">Windows</label>
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
@@ -284,7 +291,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                         <div class="card-header">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" role="switch" id="lamp-toggle" <?= $device['state'] ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="lamp">Lamp</label>
+                                <label class="form-check-label" for="lamp-toggle">Lamp</label>
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
@@ -303,7 +310,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                         <div class="card-header">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" role="switch" id="curtain-toggle" <?= $device['state'] ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="curtain">Curtain</label>
+                                <label class="form-check-label" for="curtain-toggle">Curtain</label>
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
