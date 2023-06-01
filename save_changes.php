@@ -9,6 +9,7 @@ $room_id = $data['room_id'];
 $state = $data['state'];
 $rangeValue = $data['range_value'];
 $which_device = $data['device'];
+$mood_value = $data['mood_value'];
 
 
 $final_state = 0;
@@ -19,7 +20,8 @@ if (isset($state) && !empty($state) && $state != false) {
 switch ($which_device) {
     case 'ac':
         set_ac_device_state($room_id, $final_state);
-        if ($rangeValue) set_ac_device_value($room_id, $rangeValue);
+        if ($rangeValue != null) set_ac_device_value($room_id, $rangeValue);
+        if ($mood_value != null) set_ac_device_mood($room_id, $mood_value);
         break;
     case 'tv':
         set_tv_device_state($room_id, $final_state);
