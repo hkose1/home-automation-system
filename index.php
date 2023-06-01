@@ -223,10 +223,10 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                             <img src="./assets/image/devices/air-conditioner.avif" class="card-image-top device-icon" alt="air-conditioner" />
                             <div style="margin: 4px 0px">
                                 <label for="ac-radio-heat">Heat</label>
-                                <input type="radio" name="ac-mood-radio" id="ac-radio-heat" value="heat" style="margin-right: 15px;" <?= $device['mood'] ? 'checked' : ''?>>
+                                <input type="radio" name="ac-mode-radio" id="ac-radio-heat" value="heat" style="margin-right: 15px;" <?= $device['mode'] ? 'checked' : ''?>>
 
                                 <label for="ac-radio-cool">Cool</label>
-                                <input type="radio" name="ac-mood-radio" id="ac-radio-cool" value="cool" <?= $device['mood'] ? '' : 'checked'?>>
+                                <input type="radio" name="ac-mode-radio" id="ac-radio-cool" value="cool" <?= $device['mode'] ? '' : 'checked'?>>
                             </div>
                             <div>
                                 <input type="range" name="ac-range" id="ac-range" value=<?= $device['value'] ?>>
@@ -263,7 +263,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
                             <img src="./assets/image/devices/audio-system.avif" class="card-image-top device-icon" alt="audio-system" />
                             <div>
-                                <input type="range" name="audio-range" id="audio-range" value=<?= $device['value'] ?>>
+                                <input type="range" style="margin-top: 10px;" name="audio-range" id="audio-range" value=<?= $device['value'] ?>>
                                 <span>Value: <output id="audio-value"></output></span>
                             </div>
                         </div>
