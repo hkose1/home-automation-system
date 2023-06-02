@@ -5,15 +5,18 @@ if (roomTitleForRoomId) {
 }
 
 // air condition
+async function runAnimation(room_id) {
+    await animateTemperatureValue("temp"+room_id, getCurrentTemp(room_id), calculateFinalTemp(acValue.innerText, getDefaultTemp(), getAcMode()), 6000);
+    postACTemperature(room_id, calculateFinalTemp(acValue.innerText, getDefaultTemp(), getAcMode()));
+}
 const acRange = document.getElementById("ac-range");
 const acValue = document.getElementById("ac-value");
-const acMode = document.querySelector("input[type='radio'][name='ac-mode-radio']:checked").value == 'heat' ? 1 : 0;
 if (acRange && acValue) {
     acValue.textContent = acRange.value
     acRange.addEventListener("input", (event) => {
         acValue.textContent = event.target.value;
-        postRangeValue(acRange, event.target.value, 'ac', room_id);
-        postACTemperature(room_id, calculateFinalTemp(acValue.innerText, getDefaultTemp(), acMode));
+        postRangeValue(acRange, event.target.value, 'ac', room_id);       
+        runAnimation(room_id);
     })
 }
 
@@ -23,13 +26,13 @@ const acModeCool = document.getElementById("ac-radio-cool");
 if (acModeHeat) {
     acModeHeat.addEventListener("click", () => {
         postACModeValue(1, 'ac', room_id);
-        postACTemperature(room_id, calculateFinalTemp(acValue.innerText, getDefaultTemp(), acMode));
+        runAnimation(room_id);
     })
 }
 if (acModeCool) {
     acModeCool.addEventListener("click", () => {
         postACModeValue(0, 'ac', room_id);
-        postACTemperature(room_id, calculateFinalTemp(acValue.innerText, getDefaultTemp(), acMode));
+        runAnimation(room_id);
     })
 }
 
