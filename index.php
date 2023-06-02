@@ -85,7 +85,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                                 <tr>
                                     <?php $room_info = get_temperature_and_humidity(1);
                                     if ($room_info) : ?>
-                                        <td style="border-right: 1px solid #333">
+                                        <td style="border-right: 1px solid #333" id="temp1">
                                             <?= $room_info['temperature'] ?>&#8451
                                         </td>
                                         <td>
@@ -111,7 +111,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                                 <tr>
                                     <?php $room_info = get_temperature_and_humidity(2);
                                     if ($room_info) : ?>
-                                        <td style="border-right: 1px solid #333">
+                                        <td style="border-right: 1px solid #333" id="temp2">
                                             <?= $room_info['temperature'] ?>&#8451
                                         </td>
                                         <td>
@@ -137,7 +137,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                                 <tr>
                                     <?php $room_info = get_temperature_and_humidity(3);
                                     if ($room_info) : ?>
-                                        <td style="border-right: 1px solid #333">
+                                        <td style="border-right: 1px solid #333" id="temp3">
                                             <?= $room_info['temperature'] ?>&#8451
                                         </td>
                                         <td>
@@ -163,7 +163,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
                                 <tr>
                                     <?php $room_info = get_temperature_and_humidity(4);
                                     if ($room_info) : ?>
-                                        <td style="border-right: 1px solid #333">
+                                        <td style="border-right: 1px solid #333" id="temp4">
                                             <?= $room_info['temperature'] ?>&#8451
                                         </td>
                                         <td>
