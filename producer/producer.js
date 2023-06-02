@@ -57,4 +57,46 @@ function calculateFinalTemp(acCurrValue, defaultTemp, acMode) {
     // if the acMode is true then it is mode is Heat otherwise it is mode Cool
     return parseFloat(defaultTemp + acEffectOnTemp(acCurrValue) * (acMode ? 1 : -1)).toPrecision(2);
 }
-// postACTemperature(room_id, getDefaultTemp());
+function getCurrentTemp(room_id) {
+    const temp = document.getElementById("temp"+room_id);
+    return parseFloat(temp.innerText).toPrecision(2);
+}
+function getAcMode() {
+    return document.querySelector("input[type='radio'][name='ac-mode-radio']:checked").value == 'heat' ? 1 : 0;
+}
+
+function animateTemperatureValue(id, defaultTemp, finalTemp, duration) {
+    return new Promise((resolve, reject) => {
+        try {
+            const obj = document.getElementById(id);
+
+            const range = finalTemp - defaultTemp;
+
+            const minTimer = 50;
+
+            let stepTime = Math.abs(Math.floor(duration / range));
+            stepTime = Math.max(stepTime, minTimer);
+
+            const startTime = new Date().getTime();
+            const endTime = startTime + duration;
+
+            let timer;
+
+            function run() {
+                const now = new Date().getTime();
+                const remaining = Math.max((endTime - now) / duration, 0);
+                const value = Math.round(finalTemp - (remaining * range));
+                obj.innerHTML = value + '&#8451';
+                if (value == finalTemp) {
+                    clearInterval(timer);
+                }
+            }
+
+            timer = setInterval(run, stepTime);
+            run();
+            resolve();
+        } catch (err) {
+            reject(err);
+        }
+    })
+}
