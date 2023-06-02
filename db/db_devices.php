@@ -8,8 +8,15 @@ try {
     echo $e->getMessage();
 }
 
-// room: to get temperature and humidity
 
+// room: set temperature
+function set_temperature($room_id, $temperature) {
+    global $db;
+    $q = $db->prepare("UPDATE room SET temperature = ? WHERE id = ?");
+    $q->execute([$temperature, $room_id]);
+}
+
+// room: to get temperature and humidity
 function get_temperature_and_humidity($room_id) {
     global $db;
     $q = $db->prepare("SELECT * FROM room WHERE id = ?");

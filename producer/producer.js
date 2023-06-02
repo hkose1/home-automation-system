@@ -1,42 +1,60 @@
-// calculatin of temperature and humidty dynamicly
 const currDate = new Date(Date.now());
+if (!localStorage.getItem("initialDate")) {
+    localStorage.setItem("initialDate", currDate);
+}
 const currMonth = currDate.getMonth();
+// fall: 5...8 winter: -10..-3 spring: 10...15 summer: 18...25
 
-// fall: 5 winter: -10 spring: 15 summer: 25
-let defaultTemp;
-switch(currMonth) {
-    case 8:
-    case 9:
-    case 10:
-        defaultTemp = 5;
-        break;
-    case 11:
-    case 0:
-    case 1:
-        defaultTemp = -10;
-        break;
-    case 2:
-    case 3:
-    case 4:
-        defaultTemp = 15;
-        break;
-    case 5:
-    case 6:
-    case 7:
-        defaultTemp = 25;
-        break;
+function getRandomTemp(start, end) {
+    return parseInt(Math.random() * (end - start + 1)) + start;
 }
 
-const acRange2 = document.getElementById("ac-range");
-const acValue2 = document.getElementById("ac-value");
-acRange2.addEventListener("change", () => {
-    console.log(acValue2.innerText);
-})
+function initializeDefaultTemp(currMonth) {
+    switch (currMonth) {
+        case 8:
+        case 9:
+        case 10:
+            return getRandomTemp(5, 8);
+        case 11:
+        case 0:
+        case 1:
+            return getRandomTemp(-10, -3);
+        case 2:
+        case 3:
+        case 4:
+            return getRandomTemp(10, 15);
+        case 5:
+        case 6:
+        case 7:
+            return getRandomTemp(18, 25);
+    }
+}
+
+function getDefaultTemp() {
+    let defaultTemp;
+    if (localStorage.getItem("defaultTemp")) {
+        const initialHours = new Date(localStorage.getItem("initialDate")).getHours();
+        const now = new Date(Date.now());
+        if (Math.abs(initialHours - now.getHours()) >= 4) {
+            defaultTemp = initializeDefaultTemp(currMonth);
+            localStorage.setItem("defaultTemp", defaultTemp);
+            localStorage.setItem("initialDate", now);
+        } else {
+            defaultTemp = localStorage.getItem("defaultTemp");
+        }
+    } else {
+        defaultTemp = initializeDefaultTemp(currMonth);
+        localStorage.setItem("defaultTemp", defaultTemp);
+    }
+    return parseInt(defaultTemp);
+}
 
 function acEffectOnTemp(acCurrValue) {
-    return 0.2 * acCurrValue;
+    return 0.15 * acCurrValue;
 }
 
-
-console.log("default temp");
-console.log();
+function calculateFinalTemp(acCurrValue, defaultTemp, acMode) {
+    // if the acMode is true then it is mode is Heat otherwise it is mode Cool
+    return parseFloat(defaultTemp + acEffectOnTemp(acCurrValue) * (acMode ? 1 : -1)).toPrecision(2);
+}
+// postACTemperature(room_id, getDefaultTemp());
