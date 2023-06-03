@@ -8,6 +8,8 @@ include 'utils/utils.php';
 if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
     header('Location:./login/login.php');
 }
+$windowRobbing = post('room');
+
 ?>
 
 <!doctype html>
@@ -272,7 +274,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
 
                 <?php $device = get_window_device(get('room_id'));
                 if ($device) :  ?>
-                    <div class="card my-card" style="width: 23rem;">
+                    <div class="card my-card" style="width: 23rem;" <?php if($windowRobbing) {echo 'id="window"';} ?>>
                         <div class="card-header">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" role="switch" id="window-toggle" <?= $device['state'] ? 'checked' : '' ?>>
