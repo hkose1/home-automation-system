@@ -6,7 +6,7 @@ if (roomTitleForRoomId) {
 
 // air condition
 async function runAnimation(room_id) {
-    await animateTemperatureValue("temp"+room_id, getCurrentTemp(room_id), calculateFinalTemp(acValue.innerText, getDefaultTemp(), getAcMode()), 6000);
+    await animateTemperatureValue("temp" + room_id, getCurrentTemp(room_id), calculateFinalTemp(acValue.innerText, getDefaultTemp(), getAcMode()), 6000);
     postACTemperature(room_id, calculateFinalTemp(acValue.innerText, getDefaultTemp(), getAcMode()));
 }
 const acRange = document.getElementById("ac-range");
@@ -15,7 +15,7 @@ if (acRange && acValue) {
     acValue.textContent = acRange.value
     acRange.addEventListener("input", (event) => {
         acValue.textContent = event.target.value;
-        postRangeValue(acRange, event.target.value, 'ac', room_id);       
+        postRangeValue(acRange, event.target.value, 'ac', room_id);
         runAnimation(room_id);
     })
 }
@@ -39,6 +39,8 @@ if (acModeCool) {
 const acToggle = document.getElementById("ac-toggle");
 postToggleValue(acToggle, 'ac', room_id);
 
+
+
 // tv
 const tvToggle = document.getElementById("tv-toggle");
 postToggleValue(tvToggle, 'tv', room_id);
@@ -59,6 +61,37 @@ postToggleValue(audioToggle, 'audio', room_id);
 // window
 const windowToggle = document.getElementById("window-toggle");
 postToggleValue(windowToggle, 'window', room_id);
+
+// windows animation
+const windowObj = document.getElementById("window");
+if (windowObj) {
+    windowObj.addEventListener("onload", windowRobbingAnimation(windowObj, 10));
+}
+function windowRobbingAnimation(windowObj, duration) {
+    alert("Robbing through windows!!!");
+    duration = parseInt(duration);
+    if (duration < 5) {
+        duration = 5;
+    }
+    // from second to milisecond
+    duration = duration * 1000;
+    const initialColor = windowObj.style.backgroundColor;
+    let startTime = new Date().getTime();
+    let endTime = startTime + duration;
+    function bgDanger() {
+        if (windowObj.style.backgroundColor == initialColor) {
+            windowObj.style.backgroundColor = "red";
+        }else {
+            windowObj.style.backgroundColor = initialColor;
+        }
+        if (new Date().getTime() >= endTime) {
+            clearInterval(changer);
+        }
+    }
+    const changer = setInterval(bgDanger, 1000);
+    bgDanger();
+    windowObj.style.backgroundColor = initialColor;
+}
 
 // lamp
 const lampToggle = document.getElementById("lamp-toggle");
