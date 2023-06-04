@@ -63,6 +63,12 @@ $windowRobbing = post('room');
         .room-title {
             margin-top: 20px;
         }
+        li > .card {
+            transition: all 0.3s;
+        }
+        li > .card:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 
