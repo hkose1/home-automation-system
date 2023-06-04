@@ -22,6 +22,7 @@
 --     room_id SMALLINT,
 --     state BOOLEAN DEFAULT FALSE,
 --     value TINYINT DEFAULT 0,
+--     mode BOOLEAN DEFAULT 0
 --     PRIMARY KEY(id),
 --     FOREIGN KEY(room_id) REFERENCES room(id)
 -- )
