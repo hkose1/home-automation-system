@@ -187,6 +187,9 @@ $windowRobbing = post('room');
                     <li>
                         <h2 style="margin-left: 15px; margin-right: 15px;">Home Automation System</h2>
                     </li>
+                    <li style="margin-left: auto; margin-right: 15px;">
+                        <a href="./producer/producer.html" class="btn btn-success">Producer Animations</a>
+                    </li>
                     <li>
                         <a href="./controller/controller.php?req=logout" class="btn btn-success logout">Log out</a>
                     </li>
@@ -225,10 +228,10 @@ $windowRobbing = post('room');
                             <img src="./assets/image/devices/air-conditioner.avif" class="card-image-top device-icon" alt="air-conditioner" />
                             <div style="margin: 4px 0px">
                                 <label for="ac-radio-heat">Heat</label>
-                                <input type="radio" name="ac-mode-radio" id="ac-radio-heat" value="heat" style="margin-right: 15px;" <?= $device['mode'] ? 'checked' : ''?>>
+                                <input type="radio" name="ac-mode-radio" id="ac-radio-heat" value="heat" style="margin-right: 15px;" <?= $device['mode'] ? 'checked' : '' ?>>
 
                                 <label for="ac-radio-cool">Cool</label>
-                                <input type="radio" name="ac-mode-radio" id="ac-radio-cool" value="cool" <?= $device['mode'] ? '' : 'checked'?>>
+                                <input type="radio" name="ac-mode-radio" id="ac-radio-cool" value="cool" <?= $device['mode'] ? '' : 'checked' ?>>
                             </div>
                             <div>
                                 <input type="range" name="ac-range" id="ac-range" value=<?= $device['value'] ?>>
@@ -274,7 +277,9 @@ $windowRobbing = post('room');
 
                 <?php $device = get_window_device(get('room_id'));
                 if ($device) :  ?>
-                    <div class="card my-card" style="width: 23rem;" <?php if($windowRobbing) {echo 'id="window"';} ?>>
+                    <div class="card my-card" style="width: 23rem;" <?php if ($windowRobbing) {
+                                                                        echo 'id="window"';
+                                                                    } ?>>
                         <div class="card-header">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" role="switch" id="window-toggle" <?= $device['state'] ? 'checked' : '' ?>>
