@@ -67,7 +67,7 @@
                 </div>
                 <div class="card-body d-flex align-items-center justify-content-center flex-column">
                     <p>Robbing the house through window</p>
-                    <form action="../index.php?room_id=1" method="post">
+                    <form onsubmit="return setAction(this)" method="post">
                         <select name="room" id="room" class="form-select" aria-label="Default select example">
                             <option value="1">Living Room</option>
                             <option value="2">Bedroom</option>
@@ -84,6 +84,12 @@
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous">
         </script>
     <script src="producer.js"></script>
+    </script>
+    <script>
+        function setAction(form) {
+            const roomWindow = document.getElementById("room").value;
+            form.setAttribute("action",'../index.php?room_id=' + roomWindow);
+        }
     </script>
 </body>
 
