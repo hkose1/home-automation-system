@@ -68,7 +68,7 @@ if (windowObj) {
     windowObj.addEventListener("onload", windowRobbingAnimation(windowObj, 10));
 }
 function windowRobbingAnimation(windowObj, duration) {
-    alert("Robbing through windows!!!");
+    alert("ROBBING THROUGH WINDOWS!!!");
     duration = parseInt(duration);
     if (duration < 5) {
         duration = 5;
@@ -76,12 +76,34 @@ function windowRobbingAnimation(windowObj, duration) {
     // from second to milisecond
     duration = duration * 1000;
     const initialColor = windowObj.style.backgroundColor;
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function beep() {
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        gainNode.gain.value = 0.5;
+        oscillator.frequency.value = 600;
+        oscillator.type = 'triangle';
+
+        oscillator.start();
+
+        setTimeout(
+            function () {
+                oscillator.stop();
+            },
+            duration / 1000 * 40
+        );
+    };
     let startTime = new Date().getTime();
     let endTime = startTime + duration;
     function bgDanger() {
+        beep();
         if (windowObj.style.backgroundColor == initialColor) {
             windowObj.style.backgroundColor = "red";
-        }else {
+        } else {
             windowObj.style.backgroundColor = initialColor;
         }
         if (new Date().getTime() >= endTime) {
