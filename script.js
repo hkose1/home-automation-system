@@ -220,4 +220,30 @@ function postACTemperature(room_id, value) {
     })
 }
 
+const delete_btn = document.getElementById("ac-delete");
+if (delete_btn) {
+    delete_btn.addEventListener("click", () => {
+        delete_device(room_id, 'ac');
+        location.reload();
+    })
+}
+function delete_device(room_id, device) {
+    $(document).ready(function () {
+        const data = {
+            'room_id': room_id,
+            'device' : device,
+            'delete_device': true
+        }
+        $.ajax({
+            type: "POST",
+            url: "save_changes.php",
+            data: JSON.stringify(data),
+            dataType: 'text',
+            async: false,
+            contentType: "application/json",
+            cache: false
+        })
+    })
+}
+
 

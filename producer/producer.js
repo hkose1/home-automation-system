@@ -54,7 +54,7 @@ function acEffectOnTemp(acCurrValue) {
 }
 
 function calculateFinalTemp(acCurrValue, defaultTemp, acMode) {
-    // if the acMode is true then it is mode is Heat otherwise it is mode Cool
+    // if the acMode is true then its mode is Heat otherwise its mode is Cool
     return parseFloat(defaultTemp + acEffectOnTemp(acCurrValue) * (acMode ? 1 : -1)).toPrecision(2);
 }
 function getCurrentTemp(room_id) {

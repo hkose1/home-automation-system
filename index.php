@@ -63,10 +63,12 @@ $windowRobbing = post('room');
         .room-title {
             margin-top: 20px;
         }
-        li > .card {
+
+        li>.card {
             transition: all 0.3s;
         }
-        li > .card:hover {
+
+        li>.card:hover {
             transform: scale(1.05);
         }
     </style>
@@ -194,10 +196,10 @@ $windowRobbing = post('room');
                         <h2 style="margin-left: 15px; margin-right: 15px;">Home Automation System</h2>
                     </li>
                     <li style="margin-left: auto; margin-right: 15px;">
-                        <a href="./producer/producer.html" class="btn btn-success">Producer Animations</a>
+                        <a href="./producer/producer.html" class="btn btn-success" style="border-radius: 7px;">Producer Animations</a>
                     </li>
                     <li>
-                        <a href="./controller/controller.php?req=logout" class="btn btn-success logout">Log out</a>
+                        <a href="./controller/controller.php?req=logout" class="btn btn-success logout " style="border-radius: 7px;">Log out</a>
                     </li>
                 </ul>
             </div>
@@ -225,9 +227,16 @@ $windowRobbing = post('room');
                 if ($device) :  ?>
                     <div class="card my-card" style="width: 23rem;">
                         <div class="card-header">
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch d-flex">
                                 <input class="form-check-input" type="checkbox" role="switch" id="ac-toggle" <?= $device['state'] ? 'checked' : '' ?>>
                                 <label class="form-check-label" for="ac-toggle">Air Conditioner</label>
+                                <div class="btn-group dropleft d-flex" style="margin-left: auto;">
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" type="button" id="ac-delete">Delete</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
@@ -337,6 +346,8 @@ $windowRobbing = post('room');
     </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     <script src="script.js"></script>
     <script src="producer/producer.js"></script>
 </body>

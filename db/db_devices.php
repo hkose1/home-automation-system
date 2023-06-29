@@ -62,6 +62,26 @@ function set_ac_device_mood($id, $mode_value) {
     $q->execute([$mode_value, $id]);
 }
 
+function add_ac_device($id) {
+    global $db;
+    $q = $db->prepare("SELECT * FROM device_ac WHERE room_id = ?");
+    $device = $q->execute([$id]);
+    if ($device) {
+        if ($q->rowCount() == 0) {
+            $q = $db->prepare("SELECT * FROM device_ac");
+            $new_device_id = $q->rowCount() + 1;
+            $q = $db->prepare("INSERT INTO device_ac VALUES(?,?,?,?,?)");
+            $q->execute([$new_device_id,$id,0,0,0]);
+        }
+    }
+}
+
+function delete_ac_device($id) {
+    global $db;
+    $q = $db->prepare("DELETE FROM device_ac WHERE room_id = ?");
+    $q->execute([$id]);
+}
+
 // television
 function get_tv_device($room_id) {
     global $db;
@@ -161,4 +181,3 @@ function set_curtain_device_state($id, $state) {
     $q = $db->prepare("UPDATE device_curtain SET state = ? WHERE room_id = ?");
     $q->execute([$state, $id]);
 }
-?>
