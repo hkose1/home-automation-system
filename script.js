@@ -39,8 +39,6 @@ if (acModeCool) {
 const acToggle = document.getElementById("ac-toggle");
 postToggleValue(acToggle, 'ac', room_id);
 
-
-
 // tv
 const tvToggle = document.getElementById("tv-toggle");
 postToggleValue(tvToggle, 'tv', room_id);
@@ -220,18 +218,21 @@ function postACTemperature(room_id, value) {
     })
 }
 
-const delete_btn = document.getElementById("ac-delete");
-if (delete_btn) {
-    delete_btn.addEventListener("click", () => {
-        delete_device(room_id, 'ac');
-        location.reload();
+const deleteBtns = document.querySelectorAll("button[id$='-delete']");
+for (const deleteBtn of deleteBtns) {
+    deleteBtn.addEventListener("click", () => {
+        deleteDevice(room_id, deleteBtn.getAttribute('name'));
+        setTimeout(() => {
+            location.reload();
+        }, 100);
     })
 }
-function delete_device(room_id, device) {
+
+function deleteDevice(room_id, device) {
     $(document).ready(function () {
         const data = {
             'room_id': room_id,
-            'device' : device,
+            'device': device,
             'delete_device': true
         }
         $.ajax({
@@ -247,3 +248,78 @@ function delete_device(room_id, device) {
 }
 
 
+function addDevice(room_id, device) {
+    $(document).ready(function () {
+        const data = {
+            'room_id': room_id,
+            'device': device,
+            'add_device': true
+        }
+        $.ajax({
+            type: "POST",
+            url: "save_changes.php",
+            data: JSON.stringify(data),
+            dataType: 'text',
+            async: false,
+            contentType: "application/json",
+            cache: false
+        })
+    })
+}
+const dropdownMenu = document.getElementById("dropdown-add-device-menu");
+const devicesList = [['ac', acToggle], ['tv', tvToggle], ['audio', audioToggle], ['window', windowToggle],
+['lamp', lampToggle], ['curtain', curtainToggle]];
+const menuItems = {
+    'ac': 'Air Conditioner',
+    'tv': 'Television',
+    'audio': 'Audio System',
+    'window': 'Windows',
+    'lamp': 'Lamp',
+    'curtain': 'Curtain'
+}
+
+if (dropdownMenu) {
+    let hasAll = true;
+    let newDevicesBtns = [];
+    for (const device of devicesList) {
+        if (device[1] == null) {
+            hasAll = false;
+            newDevicesBtns.push([device[0], addChildToDropdownMenu(room_id, device[0], menuItems[device[0]])]);
+        }
+    }
+    for (const btn of newDevicesBtns) {
+        btn[1].addEventListener("click", () => {
+            addDevice(room_id, btn[0]);
+            setTimeout(() => {
+                location.reload();
+            }, 100);
+        })
+    }
+    if (hasAll) {
+        const hasAllDevices = document.createElement("p")
+        hasAllDevices.innerText = "This room has already all devices."
+        hasAllDevices.style.marginLeft = "3px";
+        hasAllDevices.style.marginRight = "3px";
+        dropdownMenu.appendChild(hasAllDevices)
+    }
+}
+
+function getDropdownBtn() {
+    const addDeviceBtn = document.createElement("button")
+    addDeviceBtn.setAttribute("class", "dropdown-item")
+    addDeviceBtn.setAttribute("type", "button")
+    return addDeviceBtn;
+}
+
+function addChildToDropdownMenu(room_id, deviceId, deviceName) {
+    const btn = getDropdownBtn()
+    btn.innerText = deviceName
+    dropdownMenu.appendChild(btn)
+    // btn.addEventListener("click", () => {
+    //     addDevice(room_id, deviceId);
+    //     setTimeout(() => {
+    //         location.reload();
+    //     }, 100);
+    // })
+    return btn;
+}

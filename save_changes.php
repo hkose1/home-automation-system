@@ -11,11 +11,16 @@ $rangeValue = $data['range_value'] ?? null;
 $which_device = $data['device'] ?? null;
 $mode_value = $data['mode_value'] ?? null;
 $delete_device = $data['delete_device'] ?? null;
+$add_device = $data['add_device'] ?? null;
+
+var_dump($delete_device);
 
 switch ($which_device) {
     case 'ac':
         if ($delete_device == true) {
-            delete_ac_device($room_id);
+            delete_device($room_id, 'ac');
+        } else if ($add_device == true) {
+            add_device($room_id, 'ac');
         } else {
             if (isset($state)) {
                 if ($state) {
@@ -41,54 +46,85 @@ switch ($which_device) {
         }
         break;
     case 'tv':
-        if (isset($state)) {
-            if ($state) {
-                set_tv_device_state($room_id, 1);
-            } else {
-                set_tv_device_state($room_id, 0);
+        if ($delete_device == true) {
+            delete_device($room_id, 'tv');
+        } else if ($add_device == true) {
+            add_device($room_id, 'tv');
+        } else {
+            if (isset($state)) {
+                if ($state) {
+                    set_tv_device_state($room_id, 1);
+                } else {
+                    set_tv_device_state($room_id, 0);
+                }
             }
         }
+
         break;
     case 'audio':
-        if (isset($state)) {
-            if ($state) {
-                set_audio_device_state($room_id, 1);
-            } else {
-                set_audio_device_state($room_id, 0);
+        if ($delete_device == true) {
+            delete_device($room_id, 'audio');
+        } else if ($add_device == true) {
+            add_device($room_id, 'audio');
+        } else {
+            if (isset($state)) {
+                if ($state) {
+                    set_audio_device_state($room_id, 1);
+                } else {
+                    set_audio_device_state($room_id, 0);
+                }
             }
-        }
-        if (isset($rangeValue)) {
-            if ($rangeValue) {
-                set_audio_device_value($room_id, $rangeValue);
-            } else {
-                set_audio_device_value($room_id, 0);
+            if (isset($rangeValue)) {
+                if ($rangeValue) {
+                    set_audio_device_value($room_id, $rangeValue);
+                } else {
+                    set_audio_device_value($room_id, 0);
+                }
             }
         }
         break;
     case 'window':
-        if (isset($state)) {
-            if ($state) {
-                set_window_device_state($room_id, 1);
-            } else {
-                set_window_device_state($room_id, 0);
+        if ($delete_device == true) {
+            delete_device($room_id, 'window');
+        } else if ($add_device == true) {
+            add_device($room_id, 'window');
+        } else {
+            if (isset($state)) {
+                if ($state) {
+                    set_window_device_state($room_id, 1);
+                } else {
+                    set_window_device_state($room_id, 0);
+                }
             }
         }
         break;
     case 'lamp':
-        if (isset($state)) {
-            if ($state) {
-                set_lamp_device_state($room_id, 1);
-            } else {
-                set_lamp_device_state($room_id, 0);
+        if ($delete_device == true) {
+            delete_device($room_id, 'lamp');
+        } else if ($add_device == true) {
+            add_device($room_id, 'lamp');
+        } else {
+            if (isset($state)) {
+                if ($state) {
+                    set_lamp_device_state($room_id, 1);
+                } else {
+                    set_lamp_device_state($room_id, 0);
+                }
             }
         }
         break;
     case 'curtain':
-        if (isset($state)) {
-            if ($state) {
-                set_curtain_device_state($room_id, 1);
-            } else {
-                set_curtain_device_state($room_id, 0);
+        if ($delete_device == true) {
+            delete_device($room_id, 'curtain');
+        } else if ($add_device == true) {
+            add_device($room_id, 'curtain');
+        } else {
+            if (isset($state)) {
+                if ($state) {
+                    set_curtain_device_state($room_id, 1);
+                } else {
+                    set_curtain_device_state($room_id, 0);
+                }
             }
         }
         break;

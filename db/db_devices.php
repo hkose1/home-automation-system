@@ -1,182 +1,142 @@
-<?php 
+<?php
 
 try {
     $db = new PDO("mysql:host=localhost;dbname=home_automation_system", 'root', 'admin');
-    $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-
-}catch(Exception $e) {
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (Exception $e) {
     echo $e->getMessage();
 }
 
 
 // room: set temperature
-function set_temperature($room_id, $temperature) {
+function set_temperature($room_id, $temperature)
+{
     global $db;
     $q = $db->prepare("UPDATE room SET temperature = ? WHERE id = ?");
     $q->execute([$temperature, $room_id]);
 }
 
 // room: to get temperature and humidity
-function get_temperature_and_humidity($room_id) {
+function get_temperature_and_humidity($room_id)
+{
     global $db;
     $q = $db->prepare("SELECT * FROM room WHERE id = ?");
     $device = $q->execute([$room_id]);
-    if($device) {
+    if ($device) {
         if ($q->rowCount()) {
             return $q->fetch(PDO::FETCH_ASSOC);
-        }else {
+        } else {
             return [];
         }
     }
 }
+
+
+// crud operations on devices
+function get_device($room_id, $table_name)
+{
+    global $db;
+    $q = $db->prepare("SELECT * FROM device_" . $table_name . " WHERE room_id = ?");
+    $device = $q->execute([$room_id]);
+    if ($device) {
+        if ($q->rowCount()) {
+            return $q->fetch(PDO::FETCH_ASSOC);
+        } else {
+            return [];
+        }
+    }
+}
+
+function add_device($id, $table_name)
+{
+    global $db;
+    $q = $db->prepare("SELECT * FROM device_" . $table_name);
+    $new_device_id = $q->rowCount() + 1;
+    if ($table_name == 'ac') {
+        $q = $db->prepare("INSERT INTO device_ac VALUES(?,?,?,?,?)");
+        $q->execute([$new_device_id, $id, 0, 0, 0]);
+    } else if ($table_name == 'audio') {
+        $q = $db->prepare("INSERT INTO device_audio VALUES(?,?,?,?)");
+        $q->execute([$new_device_id, $id, 0, 0]);
+    } else {
+        $q = $db->prepare("INSERT INTO device_" . $table_name . " VALUES(?,?,?)");
+        $q->execute([$new_device_id, $id, 0]);
+    }
+}
+
+function delete_device($id, $table_name)
+{
+    global $db;
+    $q = $db->prepare("DELETE FROM device_" . $table_name . " WHERE room_id = ?");
+    $q->execute([$id]);
+}
+
 
 // air condition 
-function get_ac_device($room_id) {
-    global $db;
-    $q = $db->prepare("SELECT * FROM device_ac WHERE room_id = ?");
-    $device = $q->execute([$room_id]);
-    if($device) {
-        if ($q->rowCount()) {
-            return $q->fetch(PDO::FETCH_ASSOC);
-        }else {
-            return [];
-        }
-    }
-}
-
-
-function set_ac_device_state($id, $state) {
+function set_ac_device_state($id, $state)
+{
     global $db;
     $q = $db->prepare("UPDATE device_ac SET state = ? WHERE room_id = ?");
     $q->execute([$state, $id]);
 }
-function set_ac_device_value($id, $value) {
+function set_ac_device_value($id, $value)
+{
     global $db;
     $q = $db->prepare("UPDATE device_ac SET value = ? WHERE room_id = ?");
     $q->execute([$value, $id]);
 }
 
-function set_ac_device_mood($id, $mode_value) {
+function set_ac_device_mood($id, $mode_value)
+{
     global $db;
     $q = $db->prepare("UPDATE device_ac SET mode = ? WHERE room_id = ?");
     $q->execute([$mode_value, $id]);
 }
 
-function add_ac_device($id) {
-    global $db;
-    $q = $db->prepare("SELECT * FROM device_ac WHERE room_id = ?");
-    $device = $q->execute([$id]);
-    if ($device) {
-        if ($q->rowCount() == 0) {
-            $q = $db->prepare("SELECT * FROM device_ac");
-            $new_device_id = $q->rowCount() + 1;
-            $q = $db->prepare("INSERT INTO device_ac VALUES(?,?,?,?,?)");
-            $q->execute([$new_device_id,$id,0,0,0]);
-        }
-    }
-}
-
-function delete_ac_device($id) {
-    global $db;
-    $q = $db->prepare("DELETE FROM device_ac WHERE room_id = ?");
-    $q->execute([$id]);
-}
 
 // television
-function get_tv_device($room_id) {
-    global $db;
-    $q = $db->prepare("SELECT * FROM device_tv WHERE room_id = ?");
-    $device = $q->execute([$room_id]);
-    if($device) {
-        if ($q->rowCount()) {
-            return $q->fetch(PDO::FETCH_ASSOC);
-        }else {
-            return [];
-        }
-    }
-}
-function set_tv_device_state($id, $state) {
+function set_tv_device_state($id, $state)
+{
     global $db;
     $q = $db->prepare("UPDATE device_tv SET state = ? WHERE room_id = ?");
     $q->execute([$state, $id]);
 }
 
 // audio system
-function get_audio_system_device($room_id) {
-    global $db;
-    $q = $db->prepare("SELECT * FROM device_audio WHERE room_id = ?");
-    $device = $q->execute([$room_id]);
-    if($device) {
-        if ($q->rowCount()) {
-            return $q->fetch(PDO::FETCH_ASSOC);
-        }else {
-            return [];
-        }
-    }
+function add_audio_device($id)
+{
 }
-function set_audio_device_state($id, $state) {
+function set_audio_device_state($id, $state)
+{
     global $db;
     $q = $db->prepare("UPDATE device_audio SET state = ? WHERE room_id = ?");
     $q->execute([$state, $id]);
 }
-function set_audio_device_value($id, $value) {
+function set_audio_device_value($id, $value)
+{
     global $db;
     $q = $db->prepare("UPDATE device_audio SET value = ? WHERE room_id = ?");
     $q->execute([$value, $id]);
 }
 
 // window
-function get_window_device($room_id) {
-    global $db;
-    $q = $db->prepare("SELECT * FROM device_window WHERE room_id = ?");
-    $device = $q->execute([$room_id]);
-    if($device) {
-        if ($q->rowCount()) {
-            return $q->fetch(PDO::FETCH_ASSOC);
-        }else {
-            return [];
-        }
-    }
-}
-function set_window_device_state($id, $state) {
+function set_window_device_state($id, $state)
+{
     global $db;
     $q = $db->prepare("UPDATE device_window SET state = ? WHERE room_id = ?");
     $q->execute([$state, $id]);
 }
 
 // lamp
-function get_lamp_device($room_id) {
-    global $db;
-    $q = $db->prepare("SELECT * FROM device_lamp WHERE room_id = ?");
-    $device = $q->execute([$room_id]);
-    if($device) {
-        if ($q->rowCount()) {
-            return $q->fetch(PDO::FETCH_ASSOC);
-        }else {
-            return [];
-        }
-    }
-}
-
-function set_lamp_device_state($id, $state) {
+function set_lamp_device_state($id, $state)
+{
     global $db;
     $q = $db->prepare("UPDATE device_lamp SET state = ? WHERE room_id = ?");
     $q->execute([$state, $id]);
 }
 // curtain
-function get_curtain_device($room_id) {
-    global $db;
-    $q = $db->prepare("SELECT * FROM device_curtain WHERE room_id = ?");
-    $device = $q->execute([$room_id]);
-    if($device) {
-        if ($q->rowCount()) {
-            return $q->fetch(PDO::FETCH_ASSOC);
-        }else {
-            return [];
-        }
-    }
-}
-function set_curtain_device_state($id, $state) {
+function set_curtain_device_state($id, $state)
+{
     global $db;
     $q = $db->prepare("UPDATE device_curtain SET state = ? WHERE room_id = ?");
     $q->execute([$state, $id]);

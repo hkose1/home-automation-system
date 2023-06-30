@@ -221,9 +221,16 @@ $windowRobbing = post('room');
                             break;
                     } ?>
                 </h3>
+                <div class="btn-group dropright d-flex" style="margin-left: 2%;">
+                    <button type="button" class="btn btn-light btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <strong>Add Device</strong> 
+                    </button>
+                    <div class="dropdown-menu" id="dropdown-add-device-menu">
+                    </div>
+                </div>
             </div>
             <div class="d-flex justify-content-around flex-wrap">
-                <?php $device = get_ac_device(get('room_id'));
+                <?php $device = get_device(get('room_id'), 'ac');
                 if ($device) :  ?>
                     <div class="card my-card" style="width: 23rem;">
                         <div class="card-header">
@@ -234,7 +241,7 @@ $windowRobbing = post('room');
                                     <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     </button>
                                     <div class="dropdown-menu">
-                                        <button class="dropdown-item" type="button" id="ac-delete">Delete</button>
+                                        <button class="dropdown-item" name="ac" type="button" id="ac-delete">Delete</button>
                                     </div>
                                 </div>
                             </div>
@@ -256,13 +263,20 @@ $windowRobbing = post('room');
                     </div>
                 <?php endif ?>
 
-                <?php $device = get_tv_device(get('room_id'));
+                <?php $device = get_device(get('room_id'), 'tv');
                 if ($device) :  ?>
                     <div class="card my-card" style="width: 23rem;">
                         <div class="card-header">
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch d-flex">
                                 <input class="form-check-input" type="checkbox" role="switch" id="tv-toggle" <?= $device['state'] ? 'checked' : '' ?>>
                                 <label class="form-check-label" for="tv-toggle">Television</label>
+                                <div class="btn-group dropleft d-flex" style="margin-left: auto;">
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" name="tv" type="button" id="tv-delete">Delete</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
@@ -271,13 +285,20 @@ $windowRobbing = post('room');
                     </div>
                 <?php endif ?>
 
-                <?php $device = get_audio_system_device(get('room_id'));
+                <?php $device = get_device(get('room_id'), 'audio');
                 if ($device) :  ?>
                     <div class="card my-card" style="width: 23rem;">
                         <div class="card-header">
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch d-flex">
                                 <input class="form-check-input" type="checkbox" role="switch" id="audio-system-toggle" <?= $device['state'] ? 'checked' : '' ?>>
                                 <label class="form-check-label" for="audio-system-toggle">Audio System</label>
+                                <div class="btn-group dropleft d-flex" style="margin-left: auto;">
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" name="audio" type="button" id="audio-system-delete">Delete</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
@@ -290,15 +311,22 @@ $windowRobbing = post('room');
                     </div>
                 <?php endif ?>
 
-                <?php $device = get_window_device(get('room_id'));
+                <?php $device = get_device(get('room_id'), 'window');
                 if ($device) :  ?>
                     <div class="card my-card" style="width: 23rem;" <?php if ($windowRobbing) {
                                                                         echo 'id="window"';
                                                                     } ?>>
                         <div class="card-header">
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch d-flex">
                                 <input class="form-check-input" type="checkbox" role="switch" id="window-toggle" <?= $device['state'] ? 'checked' : '' ?>>
                                 <label class="form-check-label" for="window-toggle">Windows</label>
+                                <div class="btn-group dropleft d-flex" style="margin-left: auto;">
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" name="window" type="button" id="window-delete">Delete</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
@@ -307,13 +335,20 @@ $windowRobbing = post('room');
                     </div>
                 <?php endif ?>
 
-                <?php $device = get_lamp_device(get('room_id'));
+                <?php $device = get_device(get('room_id'), 'lamp');
                 if ($device) :  ?>
                     <div class="card my-card" style="width: 23rem;">
                         <div class="card-header">
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch d-flex">
                                 <input class="form-check-input" type="checkbox" role="switch" id="lamp-toggle" <?= $device['state'] ? 'checked' : '' ?>>
                                 <label class="form-check-label" for="lamp-toggle">Lamp</label>
+                                <div class="btn-group dropleft d-flex" style="margin-left: auto;">
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" name="lamp" type="button" id="lamp-delete">Delete</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
@@ -326,13 +361,20 @@ $windowRobbing = post('room');
                     </div>
                 <?php endif ?>
 
-                <?php $device = get_curtain_device(get('room_id'));
+                <?php $device = get_device(get('room_id'), 'curtain');
                 if ($device) :  ?>
                     <div class="card my-card" style="width: 23rem;">
                         <div class="card-header">
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch d-flex">
                                 <input class="form-check-input" type="checkbox" role="switch" id="curtain-toggle" <?= $device['state'] ? 'checked' : '' ?>>
                                 <label class="form-check-label" for="curtain-toggle">Curtain</label>
+                                <div class="btn-group dropleft d-flex" style="margin-left: auto;">
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" name="curtain" type="button" id="curtain-delete">Delete</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
