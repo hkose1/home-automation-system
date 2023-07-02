@@ -48,9 +48,10 @@ function get_device($room_id, $table_name)
 }
 
 function add_device($id, $table_name)
-{
+{   
     global $db;
     $q = $db->prepare("SELECT * FROM device_" . $table_name);
+    $q->execute();
     $new_device_id = $q->rowCount() + 1;
     if ($table_name == 'ac') {
         $q = $db->prepare("INSERT INTO device_ac VALUES(?,?,?,?,?)");

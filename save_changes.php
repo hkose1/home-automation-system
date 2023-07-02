@@ -13,7 +13,6 @@ $mode_value = $data['mode_value'] ?? null;
 $delete_device = $data['delete_device'] ?? null;
 $add_device = $data['add_device'] ?? null;
 
-var_dump($delete_device);
 
 switch ($which_device) {
     case 'ac':
@@ -129,3 +128,4 @@ switch ($which_device) {
         }
         break;
 }
+?>

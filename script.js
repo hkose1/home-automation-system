@@ -262,10 +262,17 @@ function addDevice(room_id, device) {
             dataType: 'text',
             async: false,
             contentType: "application/json",
-            cache: false
+            cache: false,
+            success: function(data, textStatus, jqXHR) {
+                console.log('success');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('fail');
+            }
         })
     })
 }
+
 const dropdownMenu = document.getElementById("dropdown-add-device-menu");
 const devicesList = [['ac', acToggle], ['tv', tvToggle], ['audio', audioToggle], ['window', windowToggle],
 ['lamp', lampToggle], ['curtain', curtainToggle]];
@@ -280,20 +287,11 @@ const menuItems = {
 
 if (dropdownMenu) {
     let hasAll = true;
-    let newDevicesBtns = [];
     for (const device of devicesList) {
         if (device[1] == null) {
             hasAll = false;
-            newDevicesBtns.push([device[0], addChildToDropdownMenu(room_id, device[0], menuItems[device[0]])]);
+            addChildToDropdownMenu(room_id, device[0], menuItems[device[0]]);
         }
-    }
-    for (const btn of newDevicesBtns) {
-        btn[1].addEventListener("click", () => {
-            addDevice(room_id, btn[0]);
-            setTimeout(() => {
-                location.reload();
-            }, 100);
-        })
     }
     if (hasAll) {
         const hasAllDevices = document.createElement("p")
@@ -312,14 +310,13 @@ function getDropdownBtn() {
 }
 
 function addChildToDropdownMenu(room_id, deviceId, deviceName) {
-    const btn = getDropdownBtn()
-    btn.innerText = deviceName
-    dropdownMenu.appendChild(btn)
-    // btn.addEventListener("click", () => {
-    //     addDevice(room_id, deviceId);
-    //     setTimeout(() => {
-    //         location.reload();
-    //     }, 100);
-    // })
-    return btn;
+    const btn = getDropdownBtn();
+    btn.innerText = deviceName;
+    dropdownMenu.appendChild(btn);
+    btn.addEventListener("click", () => {
+        addDevice(room_id, deviceId);
+        setTimeout(() => {
+            location.reload();
+        }, 100);
+    });
 }
