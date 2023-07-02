@@ -6,8 +6,10 @@ if (roomTitleForRoomId) {
 
 // air condition
 async function runAnimation(room_id) {
-    await animateTemperatureValue("temp" + room_id, getCurrentTemp(room_id), calculateFinalTemp(acValue.innerText, getDefaultTemp(), getAcMode()), 6000);
-    postACTemperature(room_id, calculateFinalTemp(acValue.innerText, getDefaultTemp(), getAcMode()));
+    if (acValue.textContent != 0) {
+        await animateTemperatureValue("temp" + room_id, getCurrentTemp(room_id), calculateFinalTemp(acValue.innerText, getDefaultTemp(), getAcMode()), 6000);
+        postACTemperature(room_id, calculateFinalTemp(acValue.innerText, getDefaultTemp(), getAcMode()));
+    }
 }
 const acRange = document.getElementById("ac-range");
 const acValue = document.getElementById("ac-value");
@@ -15,7 +17,7 @@ if (acRange && acValue) {
     acValue.textContent = acRange.value
     acRange.addEventListener("input", (event) => {
         acValue.textContent = event.target.value;
-        postRangeValue(acRange, event.target.value, 'ac', room_id);
+        postRangeValue(acRange, acValue.textContent, 'ac', room_id);
         runAnimation(room_id);
     })
 }
@@ -263,10 +265,10 @@ function addDevice(room_id, device) {
             async: false,
             contentType: "application/json",
             cache: false,
-            success: function(data, textStatus, jqXHR) {
+            success: function (data, textStatus, jqXHR) {
                 console.log('success');
             },
-            error: function(jqXHR, textStatus, errorThrown) {
+            error: function (jqXHR, textStatus, errorThrown) {
                 console.log('fail');
             }
         })
