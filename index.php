@@ -223,7 +223,7 @@ $windowRobbing = post('room');
                 </h3>
                 <div class="btn-group dropright d-flex" style="margin-left: 2%;">
                     <button type="button" class="btn btn-light btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <strong>Add Device</strong> 
+                        <strong>Add Device</strong>
                     </button>
                     <div class="dropdown-menu" id="dropdown-add-device-menu">
                     </div>
@@ -382,7 +382,7 @@ $windowRobbing = post('room');
                         </div>
                     </div>
                 <?php endif ?>
-
+                <div id="chartContainer" style="height: 370px; width: 90%;"></div>
             </div>
         </div>
     </div>
@@ -392,6 +392,78 @@ $windowRobbing = post('room');
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     <script src="script.js"></script>
     <script src="producer/producer.js"></script>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    <script>
+        window.onload = function() {
+            const deviceList = [];
+            const menuItems = {
+                'ac': 'Air Conditioner',
+                'tv': 'Television',
+                'audio-system': 'Audio System',
+                'window': 'Windows',
+                'lamp': 'Lamp',
+                'curtain': 'Curtain'
+            }
+            for (const deviceName in menuItems) {
+                const device = document.getElementById(deviceName + "-toggle");
+                if (device) {
+                    deviceList.push(deviceName);
+                }
+            }
+            const dataPoints = []
+            for (const device of deviceList) {
+                dataPoints.push({
+                    y: 4,
+                    label: menuItems[device]
+                })
+            }
+
+            const chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                title: {
+                    text: "Daily Device Usage"
+                },
+                axisY: {
+                    title: "Hour",
+                    includeZero: true,
+                },
+                data: [{
+                    type: "column",
+                    showInLegend: true,
+                    legendMarkerColor: "grey",
+                    legendText: "Devices",
+                    dataPoints: dataPoints
+                    // dataPoints: [{
+                    //         y: 5,
+                    //         label: "Air Conditioner"
+                    //     },
+                    //     {
+                    //         y: 11,
+                    //         label: "Television"
+                    //     },
+                    //     {
+                    //         y: 3,
+                    //         label: "Canada"
+                    //     },
+                    //     {
+                    //         y: 12,
+                    //         label: "Iran"
+                    //     },
+                    //     {
+                    //         y: 22,
+                    //         label: "Iraq"
+                    //     },
+                    //     {
+                    //         y: 1,
+                    //         label: "Kuwait"
+                    //     },
+                    // ]
+                }]
+            });
+            chart.render();
+        }
+    </script>
 </body>
 
 </html>

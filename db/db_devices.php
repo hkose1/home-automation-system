@@ -48,11 +48,17 @@ function get_device($room_id, $table_name)
 }
 
 function add_device($id, $table_name)
-{   
+{
     global $db;
-    $q = $db->prepare("SELECT * FROM device_" . $table_name);
-    $q->execute();
-    $new_device_id = $q->rowCount() + 1;
+    // $q = $db->prepare("SELECT * FROM device_" . $table_name);
+    // $q->execute();
+    // $new_device_id = $q->rowCount() + 1;
+    $new_device_id = uniqid(mt_rand(), true);
+    $new_device_id = str_replace(".", "", $new_device_id);
+    $new_device_id = intval($new_device_id);
+    $new_device_id = $new_device_id % (9000);
+    $new_device_id += 1000;
+
     if ($table_name == 'ac') {
         $q = $db->prepare("INSERT INTO device_ac VALUES(?,?,?,?,?)");
         $q->execute([$new_device_id, $id, 0, 0, 0]);
