@@ -50,7 +50,7 @@ include '../utils/utils.php';
 
                 <?php elseif (session('succeessfully_signedup')) : ?>
                     <div class="alert alert-success"><?= session('succeessfully_signedup') ?></div>
-                    
+
                 <?php endif ?>
 
 
@@ -64,6 +64,7 @@ include '../utils/utils.php';
                     <label for="password" class="col-sm-3 col-form-label">Password<span style="color:red"> *</span></label>
                     <div class="col-sm-9">
                         <input type="password" name="password" id="password" class="form-control" placeholder="********">
+                        <input type="checkbox" onclick="showHidePassword()"> <label id="showOrHide">Show password</label>
                     </div>
 
 
@@ -85,6 +86,19 @@ include '../utils/utils.php';
             </div>
         </div>
     </main>
+    <script>
+        function showHidePassword() {
+            const pass = document.getElementById("password");
+            const showOrHideLabel = document.getElementById("showOrHide");
+            if (pass.type === "password") {
+                showOrHideLabel.innerText = "Hide password";
+                pass.type = "text";
+            } else {
+                showOrHideLabel.innerText = "Show password";
+                pass.type = "password";
+            }
+        }
+    </script>
 </body>
 
 </html>

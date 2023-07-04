@@ -51,6 +51,7 @@ include '../utils/utils.php';
                         <input type="password" name="password" id="password" 
                         class="form-control"
                         placeholder="********">
+                        <input type="checkbox" onclick="showHidePassword()"> <label id="showOrHide">Show password</label>
                     </div>
                     <div style="display: flex; justify-content:flex-start; align-items: center">
                         <button type="submit" class="btn btn-success mb-4" style="margin: 23px 5px">Log in</button>
@@ -60,6 +61,19 @@ include '../utils/utils.php';
             </div>
         </div>
     </main>
+    <script>
+        function showHidePassword() {
+            const pass = document.getElementById("password");
+            const showOrHideLabel = document.getElementById("showOrHide");
+            if (pass.type === "password") {
+                showOrHideLabel.innerText = "Hide password";
+                pass.type = "text";
+            } else {
+                showOrHideLabel.innerText = "Show password";
+                pass.type = "password";
+            }
+        }
+    </script>
 </body>
 </html>
 <?php 
