@@ -394,6 +394,11 @@ $windowRobbing = post('room');
     <script src="producer/producer.js"></script>
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
     <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+    <script>
         window.onload = function() {
             const deviceList = [];
             const menuItems = {
