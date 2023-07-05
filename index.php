@@ -250,13 +250,13 @@ $windowRobbing = post('room');
                             <img src="./assets/image/devices/air-conditioner.avif" class="card-image-top device-icon" alt="air-conditioner" />
                             <div style="margin: 4px 0px">
                                 <label for="ac-radio-heat">Heat</label>
-                                <input <?= $device['state'] ? '' : 'disabled'?> type="radio" name="ac-mode-radio" id="ac-radio-heat" value="heat" style="margin-right: 15px;" <?= $device['mode'] ? 'checked' : '' ?>>
+                                <input <?= $device['state'] ? '' : 'disabled' ?> type="radio" name="ac-mode-radio" id="ac-radio-heat" value="heat" style="margin-right: 15px;" <?= $device['mode'] ? 'checked' : '' ?>>
 
                                 <label for="ac-radio-cool">Cool</label>
-                                <input <?= $device['state'] ? '' : 'disabled'?> type="radio" name="ac-mode-radio" id="ac-radio-cool" value="cool" <?= $device['mode'] ? '' : 'checked' ?>>
+                                <input <?= $device['state'] ? '' : 'disabled' ?> type="radio" name="ac-mode-radio" id="ac-radio-cool" value="cool" <?= $device['mode'] ? '' : 'checked' ?>>
                             </div>
                             <div>
-                                <input type="range" name="ac-range" id="ac-range" value=<?= $device['value'] ?> <?= $device['state'] ? '' : 'disabled'?>>
+                                <input type="range" name="ac-range" id="ac-range" value=<?= $device['value'] ?> <?= $device['state'] ? '' : 'disabled' ?>>
                                 <span>Value: <output id="ac-value"></output></span>
                             </div>
                         </div>
@@ -304,7 +304,7 @@ $windowRobbing = post('room');
                         <div class="card-body d-flex align-items-center justify-content-center flex-column">
                             <img src="./assets/image/devices/audio-system.avif" class="card-image-top device-icon" alt="audio-system" />
                             <div>
-                                <input <?= $device['state'] ? '' : 'disabled'?> type="range" style="margin-top: 10px;" name="audio-range" id="audio-range" value=<?= $device['value'] ?>>
+                                <input <?= $device['state'] ? '' : 'disabled' ?> type="range" style="margin-top: 10px;" name="audio-range" id="audio-range" value=<?= $device['value'] ?>>
                                 <span>Value: <output id="audio-value"></output></span>
                             </div>
                         </div>
@@ -418,14 +418,34 @@ $windowRobbing = post('room');
                     const device = document.getElementById(deviceName + "-toggle");
                     const deviceWithRoom = deviceName + roomId;
 
-                    let y = localStorage.getItem(deviceWithRoom) ? localStorage.getItem(deviceWithRoom) : 0;
+                    let y = 0;
+                    const now = Date.now();
                     if (device) {
                         if (device.checked && !localStorage.getItem(deviceWithRoom)) {
-                            localStorage.setItem(deviceWithRoom, 0);
+                            localStorage.setItem(deviceWithRoom, JSON.stringify({
+                                time: now,
+                                totalUsage: 0
+                            }));
                         } else if (device.checked) {
-                            const newValue = parseFloat(y) + 1.4e-3;
-                            localStorage.setItem(deviceWithRoom, newValue);
-                            y = newValue;
+                            const item = JSON.parse(localStorage.getItem(deviceWithRoom));
+                            const lastTime = item['time'];
+                            const lastTotalUsage = item['totalUsage'];
+                            const usage = (now - lastTime) / 36e5;
+                            const totalUsage = parseFloat(lastTotalUsage) + usage;
+                            localStorage.setItem(deviceWithRoom, JSON.stringify({
+                                time: now,
+                                totalUsage: totalUsage
+                            }));
+                            y = totalUsage.toPrecision(2);
+                        }else if (!device.checked && localStorage.getItem(deviceWithRoom)) {
+                            const item = JSON.parse(localStorage.getItem(deviceWithRoom));
+                            const lastTime = item['time'];
+                            const lastTotalUsage = item['totalUsage'];
+                            localStorage.setItem(deviceWithRoom, JSON.stringify({
+                                time: now,
+                                totalUsage: lastTotalUsage 
+                            }));
+                            y = lastTotalUsage.toPrecision(2);
                         }
                         const data = {
                             y: parseFloat(y),
@@ -457,12 +477,9 @@ $windowRobbing = post('room');
                 chart.render();
                 setInterval(() => {
                     location.reload();
-                }, 1000 * 30);
-                // location.reload();
+                }, 1000 * 30);;
 
             }, 5 * 1000);
-
-
 
             const chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
