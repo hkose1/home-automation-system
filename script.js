@@ -161,6 +161,23 @@ function postToggleValue(targetToggle, device, room_id) {
     if (targetToggle) {
         targetToggle.addEventListener("click", (e) => {
             const state = e.target.checked;
+            if (device == 'ac') {
+                if (!state) {
+                    acRange.setAttribute('disabled', 'true');
+                    acModeHeat.setAttribute('disabled', 'true');
+                    acModeCool.setAttribute('disabled', 'true');
+                }else {
+                    acRange.removeAttribute('disabled');
+                    acModeHeat.removeAttribute('disabled');
+                    acModeCool.removeAttribute('disabled');
+                }
+            }else if (device == 'audio') {
+                if (!state) {
+                    audioRange.setAttribute('disabled', 'true');
+                }else {
+                    audioRange.removeAttribute('disabled');
+                }
+            }
             $(document).ready(function () {
                 const data = {
                     'room_id': room_id,
