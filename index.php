@@ -400,7 +400,7 @@ $windowRobbing = post('room');
     </script>
     <script>
         window.onload = function() {
-            const deviceList = [];
+            const dataPoints = [];
             const menuItems = {
                 'ac': 'Air Conditioner',
                 'tv': 'Television',
@@ -409,19 +409,60 @@ $windowRobbing = post('room');
                 'lamp': 'Lamp',
                 'curtain': 'Curtain'
             }
-            for (const deviceName in menuItems) {
-                const device = document.getElementById(deviceName + "-toggle");
-                if (device) {
-                    deviceList.push(deviceName);
+            const roomId = <?= get('room_id') ?>;
+            if (!localStorage.getItem('initialDeviceUsageTime')) {
+                localStorage.setItem('initialDeviceUsageTime', Date.now());
+            }
+            const deviceUsageInterval = setInterval(() => {
+                for (const deviceName in menuItems) {
+                    const device = document.getElementById(deviceName + "-toggle");
+                    const deviceWithRoom = deviceName + roomId;
+
+                    let y = localStorage.getItem(deviceWithRoom) ? localStorage.getItem(deviceWithRoom) : 0;
+                    if (device) {
+                        if (device.checked && !localStorage.getItem(deviceWithRoom)) {
+                            localStorage.setItem(deviceWithRoom, 0);
+                        } else if (device.checked) {
+                            const newValue = parseFloat(y) + 1.4e-3;
+                            localStorage.setItem(deviceWithRoom, newValue);
+                            y = newValue;
+                        }
+                        const data = {
+                            y: parseFloat(y),
+                            label: menuItems[deviceName]
+                        };
+                        let has = false;
+                        for (dataPoint of dataPoints) {
+                            if (data['label'] == dataPoint['label']) {
+                                has = true;
+                            }
+                        }
+                        if (!has) {
+                            dataPoints.push(data);
+                        }
+                    }
                 }
-            }
-            const dataPoints = []
-            for (const device of deviceList) {
-                dataPoints.push({
-                    y: 4,
-                    label: menuItems[device]
-                })
-            }
+
+                if (localStorage.getItem('initialDeviceUsageTime')) {
+                    if ((Date.now() - localStorage.getItem('initialDeviceUsageTime')) / 36e5 >= 24) {
+                        localStorage.removeItem('initialDeviceUsageTime');
+                        for (const deviceName in menuItems) {
+                            if (localStorage.getItem(deviceName + roomId)) {
+                                localStorage.removeItem(deviceName + roomId);
+                            }
+                        }
+                        clearInterval(deviceUsageInterval);
+                    }
+                }
+                chart.render();
+                setInterval(() => {
+                    location.reload();
+                }, 1000 * 30);
+                // location.reload();
+
+            }, 5 * 1000);
+
+
 
             const chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
@@ -430,7 +471,7 @@ $windowRobbing = post('room');
                     text: "Daily Device Usage"
                 },
                 axisY: {
-                    title: "Hour",
+                    title: "Time in hours",
                     includeZero: true,
                 },
                 data: [{
@@ -439,31 +480,6 @@ $windowRobbing = post('room');
                     legendMarkerColor: "grey",
                     legendText: "Devices",
                     dataPoints: dataPoints
-                    // dataPoints: [{
-                    //         y: 5,
-                    //         label: "Air Conditioner"
-                    //     },
-                    //     {
-                    //         y: 11,
-                    //         label: "Television"
-                    //     },
-                    //     {
-                    //         y: 3,
-                    //         label: "Canada"
-                    //     },
-                    //     {
-                    //         y: 12,
-                    //         label: "Iran"
-                    //     },
-                    //     {
-                    //         y: 22,
-                    //         label: "Iraq"
-                    //     },
-                    //     {
-                    //         y: 1,
-                    //         label: "Kuwait"
-                    //     },
-                    // ]
                 }]
             });
             chart.render();
