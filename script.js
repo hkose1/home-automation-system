@@ -158,23 +158,32 @@ function postRangeValue(targetRange, value, device, room_id) {
 }
 
 function postToggleValue(targetToggle, device, room_id) {
+    const calculateTogglingValue = (deviceName) => {
+        const deviceNameforToggling = deviceName + room_id + 'toggling';
+        if (!localStorage.getItem(deviceNameforToggling)) {
+            localStorage.setItem(deviceNameforToggling, 0);
+        } else {
+            localStorage.setItem(deviceNameforToggling, parseInt(localStorage.getItem(deviceNameforToggling)) + 1);
+        }
+    }
     if (targetToggle) {
         targetToggle.addEventListener("click", (e) => {
             const state = e.target.checked;
+            calculateTogglingValue(device);
             if (device == 'ac') {
                 if (!state) {
                     acRange.setAttribute('disabled', 'true');
                     acModeHeat.setAttribute('disabled', 'true');
                     acModeCool.setAttribute('disabled', 'true');
-                }else {
+                } else {
                     acRange.removeAttribute('disabled');
                     acModeHeat.removeAttribute('disabled');
                     acModeCool.removeAttribute('disabled');
                 }
-            }else if (device == 'audio') {
+            } else if (device == 'audio') {
                 if (!state) {
                     audioRange.setAttribute('disabled', 'true');
-                }else {
+                } else {
                     audioRange.removeAttribute('disabled');
                 }
             }

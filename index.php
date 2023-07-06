@@ -382,7 +382,8 @@ $windowRobbing = post('room');
                         </div>
                     </div>
                 <?php endif ?>
-                <div id="chartContainer" style="height: 370px; width: 90%;"></div>
+                <div id="chartContainer" style="height: 370px; width: 90%; margin-bottom: 5%; margin-top: 5%;"></div>
+                <div id="chartContainerToggling" style="height: 370px; width: 90%;"></div>
             </div>
         </div>
     </div>
@@ -401,6 +402,7 @@ $windowRobbing = post('room');
     <script>
         window.onload = function() {
             const dataPoints = [];
+            const togglingDataList = []
             const menuItems = {
                 'ac': 'Air Conditioner',
                 'tv': 'Television',
@@ -409,6 +411,7 @@ $windowRobbing = post('room');
                 'lamp': 'Lamp',
                 'curtain': 'Curtain'
             }
+
             const roomId = <?= get('room_id') ?>;
             if (!localStorage.getItem('initialDeviceUsageTime')) {
                 localStorage.setItem('initialDeviceUsageTime', Date.now());
@@ -437,13 +440,13 @@ $windowRobbing = post('room');
                                 totalUsage: totalUsage
                             }));
                             y = totalUsage.toPrecision(2);
-                        }else if (!device.checked && localStorage.getItem(deviceWithRoom)) {
+                        } else if (!device.checked && localStorage.getItem(deviceWithRoom)) {
                             const item = JSON.parse(localStorage.getItem(deviceWithRoom));
                             const lastTime = item['time'];
                             const lastTotalUsage = item['totalUsage'];
                             localStorage.setItem(deviceWithRoom, JSON.stringify({
                                 time: now,
-                                totalUsage: lastTotalUsage 
+                                totalUsage: lastTotalUsage
                             }));
                             y = lastTotalUsage.toPrecision(2);
                         }
@@ -452,13 +455,18 @@ $windowRobbing = post('room');
                             label: menuItems[deviceName]
                         };
                         let has = false;
-                        for (dataPoint of dataPoints) {
+                        for (const dataPoint of dataPoints) {
                             if (data['label'] == dataPoint['label']) {
                                 has = true;
                             }
                         }
+                        const toggleData = {
+                            y: localStorage.getItem(deviceWithRoom + 'toggling') ? parseInt(localStorage.getItem(deviceWithRoom + 'toggling')) : 0,
+                            label: menuItems[deviceName]
+                        }
                         if (!has) {
                             dataPoints.push(data);
+                            togglingDataList.push(toggleData);
                         }
                     }
                 }
@@ -474,10 +482,12 @@ $windowRobbing = post('room');
                         clearInterval(deviceUsageInterval);
                     }
                 }
+
                 chart.render();
+                togglingChart.render();
                 setInterval(() => {
                     location.reload();
-                }, 1000 * 30);;
+                }, 1000 * 30);
 
             }, 5 * 1000);
 
@@ -500,6 +510,20 @@ $windowRobbing = post('room');
                 }]
             });
             chart.render();
+
+            const togglingChart = new CanvasJS.Chart("chartContainerToggling", {
+                title: {
+                    text: "Toggling Device on/off"
+                },
+                axisY: {
+                    title: "Number of Toggling"
+                },
+                data: [{
+                    type: "line",
+                    dataPoints: togglingDataList
+                }]
+            });
+            togglingChart.render();
         }
     </script>
 </body>
