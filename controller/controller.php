@@ -21,6 +21,8 @@ if (get('req') == 'signup') {
         exit();
     }else if (is_username_used($username)) {
         $_SESSION['username_taken_error'] = "This username is already taken.";
+        header("Location:../signup/signup.php");
+        exit();
     } else if (!preg_match('/^[A-Za-z]{1}[A-Za-z0-9]{4,17}$/', $username)) {
         $_SESSION['username_validation_error'] =
             "Username:
